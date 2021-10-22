@@ -37,9 +37,12 @@ const module = {
           }
     }
 };
-export const store = new Vuex.Store({
+
+const store = new Vuex.Store({
     strict: true,
     modules: {
         module
     }
 });
+
+export default store;

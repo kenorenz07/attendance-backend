@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,7 +19,12 @@ class DatabaseSeeder extends Seeder
 
         Admin::create([
             'username' => 'admin_test',
+            'name' => 'John Doe',
             'password' => bcrypt(123123)
         ]);
+
+        Artisan::call('passport:install');
+        Artisan::call('storage:link');
+        Artisan::call('key:generate');
     }
 }

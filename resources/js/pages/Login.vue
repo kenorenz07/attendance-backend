@@ -1,64 +1,62 @@
 <template>
     <div>
-        <v-app id="inspire">
+        <v-app id="inspire" class="at-login">
             <v-main>
-                <v-row no-gutters>
-                    <v-col cols="7"> 
-                         <img
-                            src="/images/05.jpg"
-                            class="image-login"
-                        ></img>
-                    </v-col>
-                    <v-col  cols="5"> 
-                        <v-container
-                            fluid
-                            fill-height
-                        >
-                            <v-layout
-                                align-center
-                                justify-center
-                            >
-                                <v-card elevation="6">
-                                    <v-toolbar
-                                        color="light-green"
-                                        dark
-                                        flat
-                                    >
-                                        <v-toolbar-title>Attendance Backoffice</v-toolbar-title>
-                                    </v-toolbar>
-                                    <v-card-text>
-                                        <v-form>
-                                            <v-text-field
-                                                color="light-green"
-                                                v-model="form.username"
-                                                label="Login"
-                                                name="login"
-                                                prepend-icon="person"
-                                                type="text"
-                                            ></v-text-field>
+                <v-container fill-height fluid>
+                    <v-row  justify="center" align="center">
+                        <v-card elevation="2" class="at-login-form" max-width="900">
+                            <v-card-text>
+                                <v-row>
+                                    <v-col cols="5" align-self="center">
+                                        <v-img
+                                            lazy-src="images/lenzy_logo_big.png"
+                                            max-height="500"
+                                            src="images/lenzy_logo_big.png"
+                                        ></v-img>
+                                    </v-col>
+                                    <v-col cols="7">
+                                        <div class="ml-10">
+                                            <p class="text-h5 mb-0 at-welcome">
+                                                Welcome Back!
+                                            </p>
+                                            <p class="text-body-2">
+                                                Login to continue
+                                            </p>
+                                            <v-form class="mt-7">
+                                                <v-text-field
+                                                    v-model="form.username"
+                                                    label="Login"
+                                                    name="login"
+                                                    prepend-inner-icon="person"
+                                                    type="text"
+                                                    filled
+                                                ></v-text-field>
 
-                                            <v-text-field
-                                                color="light-green"
-                                                v-model="form.password"
-                                                id="password"
-                                                label="Password"
-                                                name="password"
-                                                prepend-icon="lock"
-                                                :type="show_pass ? 'text' : 'password'"
-                                                :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
-                                                @click:append="show_pass = !show_pass"
-                                            ></v-text-field>
-                                        </v-form>
-                                    </v-card-text>
-                                    <v-card-actions >
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="light-green" class="text-white" @click="login_admin()">Login</v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-layout>
-                        </v-container>
-                    </v-col>
-                </v-row>
+                                                <v-text-field
+                                                    v-model="form.password"
+                                                    id="password"
+                                                    label="Password"
+                                                    name="password"
+                                                    prepend-inner-icon="lock"
+                                                    :type="show_pass ? 'text' : 'password'"
+                                                    :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                                                    @click:append="show_pass = !show_pass"
+                                                    filled
+                                                ></v-text-field>
+                                            </v-form>
+                                            <v-row justify="end" class="mr-1">
+                                                <v-btn color="primary" rounded large @click="loginAdmin()">Login</v-btn>
+                                            </v-row>
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card-text>
+                            <v-card-actions >
+                            
+                            </v-card-actions>
+                        </v-card>
+                    </v-row>
+                </v-container>
             </v-main>
         </v-app>
     </div>
@@ -73,7 +71,7 @@ export default {
         show_pass : false
     }),
     methods : {
-        login_admin() {
+        loginAdmin() {
             axios.post('admin/login', this.form).then(({data}) => {
                 localStorage.setItem('token',data.token)
                 this.$router.push({name : "main"})  
@@ -83,8 +81,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
- .image-login {
-    width: 100%;
-    height: 100vh;
- }
+    .image-login {
+        width: 100%;
+        height: 100vh;
+    }
+    .at-welcome{
+        font-weight: bolder;
+        color: #545454;
+    }
+    .at-login-form {
+        background-color:  #ffffff00;
+        backdrop-filter: blur(10px);
+    }
+
+    .at-login {
+        background-image: url("/images/bg_login2.png");
+        background-size:     cover;             
+        background-repeat:   no-repeat;
+    }
 </style>

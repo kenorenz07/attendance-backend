@@ -95,7 +95,7 @@ export default {
     }
 
     .at-login {
-        background-image: url("/images/bg_login2.png");
+        background-image: url("/images/bg_login3.png");
         background-size:     cover;             
         background-repeat:   no-repeat;
     }

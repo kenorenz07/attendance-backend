@@ -20,9 +20,11 @@ class DatabaseSeeder extends Seeder
         Admin::create([
             'username' => 'admin_test',
             'name' => 'John Doe',
-            'password' => bcrypt(123123)
+            'password' => bcrypt(123123),
+            'is_super' => true
         ]);
-
+        
+        $this->call(AdminSeeder::class);
         Artisan::call('passport:install');
         Artisan::call('storage:link');
         Artisan::call('key:generate');

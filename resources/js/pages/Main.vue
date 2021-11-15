@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire" >
-    <app-nav-bar :mini="mini" ></app-nav-bar>
+    <app-nav-bar :mini="mini" @changeStatusDrawer="mini = !mini"></app-nav-bar>
 
     <app-bar @changeStatusDrawer="mini = !mini"></app-bar>
 

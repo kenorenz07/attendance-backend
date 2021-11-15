@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,11 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
  
     //Authentication Controller
     Route::get('/details',[AuthenticationController::class, 'details']);
-
     Route::post('/logout',[AuthenticationController::class, 'logout']);
+
+    // ADMIN
+    Route::get('admin/all',[AdminController::class, 'getAll']);
+    Route::post('admin/create',[AdminController::class,'create']);
+    Route::put('admin/update/{admin}',[AdminController::class,'update']);
+    Route::delete('admin/delete/{admin}/',[AdminController::class,'delete']);
 });

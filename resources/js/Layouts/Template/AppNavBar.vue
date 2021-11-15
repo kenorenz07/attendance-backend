@@ -2,7 +2,7 @@
   <v-navigation-drawer
         app
         v-model="drawer"
-        :mini-variant.sync="mini"
+        :mini-variant.sync="mini_status"
         permanent
     >
         <v-list-item class="px-2 pt-2">
@@ -56,6 +56,17 @@ export default {
             type : Boolean
         }
     },
+    computed : {
+        mini_status: {
+            get: function() {
+                return this.mini
+            },
+            set: function(value) {
+                console.log(value,"status")
+                this.$emit('changeStatusDrawer')
+            }
+        }
+    },
     methods : {
         logoutAdmin(){
             this.$admin.post('/logout').then(({data}) => {
@@ -64,13 +75,6 @@ export default {
             })
         }
     },
-    watch : {
-        "mini" : {
-            handler(val) {
-                this.$emit('changeStatusDrawer')
-            }
-        }
-    }
     
 }
 </script>

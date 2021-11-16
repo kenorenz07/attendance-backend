@@ -20,4 +20,10 @@ class Admin extends Authenticatable
     protected $fillable = [
         'username', 'password','name','is_super'
     ];
+
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 }

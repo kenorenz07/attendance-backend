@@ -26,4 +26,13 @@ class Teacher extends Authenticatable
         "username",
         "password",
     ];
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function class_details(){
+        return $this->hasMany(ClassDetail::class);
+    }
 }

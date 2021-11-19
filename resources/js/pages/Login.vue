@@ -16,10 +16,10 @@
                                     </v-col>
                                     <v-col cols="7">
                                         <div class="ml-10">
-                                            <p class="text-h5 mb-0 at-welcome">
+                                            <p class="text-h5 text-white mb-0 at-welcome">
                                                 Welcome Back!
                                             </p>
-                                            <p class="text-body-2">
+                                            <p class="text-body-2 text-white">
                                                 Login to continue
                                             </p>
                                             <v-form class="mt-7">
@@ -37,6 +37,7 @@
                                                     id="password"
                                                     label="Password"
                                                     name="password"
+                                                    class="text-white"
                                                     prepend-inner-icon="lock"
                                                     :type="show_pass ? 'text' : 'password'"
                                                     :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
@@ -75,7 +76,7 @@ export default {
             axios.post('admin/login', this.form).then(({data}) => {
                 localStorage.setItem('token',data.token)
                 if(data.token){
-                    this.$router.push('/admin')  
+                    this.$router.push('/dashboard')  
                 }
             })
         }
@@ -97,7 +98,7 @@ export default {
     }
 
     .at-login {
-        background-image: url("/images/bg_login3.png");
+        background-image: url("/images/bg_login.png");
         background-size:     cover;             
         background-repeat:   no-repeat;
     }

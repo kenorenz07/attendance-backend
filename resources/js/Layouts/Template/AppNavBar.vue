@@ -13,8 +13,10 @@
                 v-for="item in items"
                 :key="item.title"
                 color="secondary"
-                link
-                :to="item.route"
+                :class="{
+                    'v-list-item--active': activeRoute == item.route
+                }"
+                @click.stop="$router.push(item.route)"
             >
                 <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>
@@ -28,7 +30,7 @@
         <template v-slot:append>
             <v-list-item
                 color="secondary"
-                @click="logoutAdmin"
+                @click.stop="logoutAdmin"
             >
                 <v-list-item-icon>
                     <v-icon>mdi-logout-variant</v-icon>
@@ -46,8 +48,10 @@ export default {
     data: () => ({
         drawer: true,
         items: [
-            { title: 'Admin', icon: 'mdi-account-supervisor', route: '/admin' },
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
+            { title: 'Admins', icon: 'mdi-account-supervisor', route: '/admins' },
+            { title: 'Teachers', icon: 'mdi-account-multiple', route: '/teachers' },
+            { title: 'Students', icon: 'mdi-account', route: '/students' },
         ],
     }),
     props : {
@@ -57,6 +61,9 @@ export default {
         }
     },
     computed : {
+        activeRoute () {
+            return this.$route.path
+        },
         mini_status: {
             get: function() {
                 return this.mini

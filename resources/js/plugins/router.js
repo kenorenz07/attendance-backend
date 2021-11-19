@@ -5,12 +5,14 @@ import Login from '../pages/Login.vue';
 import Main from '../pages/Main.vue';
 
 import Dashboard from '../pages/Admin/Dashboard.vue';
-import Admin from '../pages/Admin/Admin.vue';
+import Admins from '../pages/Admin/Admins.vue';
+import Teachers from '../pages/Admin/Teachers.vue';
+import Students from '../pages/Admin/Students.vue';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: 'history',
-    linkExactActiveClass: 'active',
+    linkExactActiveClass: 'active-route',
     routes: [
         {
             path: '',
@@ -26,9 +28,19 @@ const router = new VueRouter({
                     component: Dashboard,
                 },
                 {
-                    path: '/admin',
-                    name: 'admin',
-                    component: Admin,
+                    path: '/admins',
+                    name: 'admins',
+                    component: Admins,
+                },
+                {
+                    path: '/teachers',
+                    name: 'teachers',
+                    component: Teachers,
+                },
+                {
+                    path: '/students',
+                    name: 'students',
+                    component: Students,
                 },
             ]
         },

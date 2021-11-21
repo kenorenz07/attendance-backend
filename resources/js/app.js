@@ -14,6 +14,10 @@ import store from './plugins/store';
 import apexchart from './plugins/apexchart';
 import Axios from './plugins/axios';
 
+import ConfirmDialog from "./Mixins/ConfirmDialog.vue";
+
+Vue.mixin(ConfirmDialog);
+
 import App from './layouts/App.vue';
 Vue.prototype.$admin = Axios
 

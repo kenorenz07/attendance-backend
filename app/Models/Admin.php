@@ -21,9 +21,16 @@ class Admin extends Authenticatable
         'username', 'password','name','is_super'
     ];
 
+    protected $appends = ['image_path'];
+
 
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function getImagePathAttribute()
+    {
+        return $this->image()->first() ? '/storage/'.$this->image()->first()->name : null;
     }
 }

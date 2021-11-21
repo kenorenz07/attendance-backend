@@ -20,31 +20,51 @@
                 >
                     <v-row>
                         <v-col cols=6>
-                          <v-text-field
-                              label="Name*"
-                              required
-                              v-model="form.name"
-                          ></v-text-field>
-                          <v-switch
-                            v-model="form.is_super"
-                            label="Super Admin"
-                          ></v-switch>
+                          <div>
+                            <v-img
+                              lazy-src="images/bg_login.png"
+                              max-height="250"
+                              max-width="250"
+                              height="200"
+                              :src="form.image ? form.image : '/images/bg_login2.png'"
+                            ></v-img>
+                            <v-btn 
+                              icon 
+                              large
+                              color="primary"
+                              @click="$refs.inputUpload.click()"
+                            >
+                                <v-icon>mdi-image-plus</v-icon>
+                            </v-btn>
+                            <input v-show="false" ref="inputUpload" type="file" @change="processImage" >
+                            
+                          </div>
+                         
                         </v-col>
                         <v-col cols=6>
                             <v-text-field
-                                label="Username*"
-                                required
-                                type="text"
-                                v-model="form.username"
+                              label="Name*"
+                              required
+                              v-model="form.name"
                             ></v-text-field>
                             <v-text-field
-                                label="Password*"
-                                required
-                                v-model="form.password"
-                                :type="show_pass ? 'text' : 'password'"
-                                :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append="show_pass = !show_pass"
+                              label="Username*"
+                              required
+                              type="text"
+                              v-model="form.username"
                             ></v-text-field>
+                            <v-text-field
+                              label="Password"
+                              required
+                              v-model="form.password"
+                              :type="show_pass ? 'text' : 'password'"
+                              :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                              @click:append="show_pass = !show_pass"
+                            ></v-text-field>
+                            <v-switch
+                              v-model="form.is_super"
+                              label="Super Admin"
+                            ></v-switch>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -89,6 +109,7 @@
                 username: '',
                 is_super : 0,
                 password: '',
+                image: '',
             }
         }
     },
@@ -97,10 +118,18 @@
         dialog: false,
     }),
     methods : {
+        processImage(e){
+          var fileReader = new FileReader()
+          
+          fileReader.readAsDataURL(e.target.files[0])
+          fileReader.onload = (e) => {
+            this.form.image = e.target.result
+          }
+        },
     },
     computed : {
       modalState(){
-          return this.dialogState
+        return this.dialogState
       }
     }
     

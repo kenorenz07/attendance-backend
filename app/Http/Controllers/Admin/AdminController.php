@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
     public function getAll(Request $request)
     {
-        $admins = Admin::query();
+        $admins = Admin::query()->where('id','!=',Auth::id());
 
         $per_page = $request->query('per_page') ? $request->query('per_page') : 10;
         $sortBy = $request->query('sortBy');
@@ -52,6 +53,15 @@ class AdminController extends Controller
             "is_super" => $request->is_super,
         ]);
 
+
+        if(str_contains($request->image,'base64')){
+            $fileName = uploadImage("admin_",$request->image);
+            
+            $admin->image()->create([
+                "name" => $fileName
+            ]);
+        }
+
         return $admin;
     }
 
@@ -64,11 +74,32 @@ class AdminController extends Controller
             "is_super" => $request->is_super,
         ]);
 
+        
+        if(str_contains($request->image,'base64')){
+
+            $fileName = uploadImage("admin_",$request->image);
+            
+            if($admin->image){
+                Storage::delete('/public/'.$admin->image->name);
+                $admin->image()->delete();
+            }
+            
+            $admin->image()->create([
+                "name" => $fileName
+            ]);
+
+        }
+
         return $update_admin;
     }
 
     public function delete(Admin $admin, Request $request)
     {
+        if($admin->image){
+            Storage::delete('/public/'.$admin->image->name);
+            $admin->image()->delete();
+        }
+        
         return $admin->delete();
     }
 }

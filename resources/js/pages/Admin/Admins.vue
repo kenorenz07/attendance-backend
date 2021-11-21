@@ -44,6 +44,25 @@
         :loading="loading"
         class="elevation-4"
       >
+        <template v-slot:item.image="{ item }">
+            <v-avatar class="my-2">
+                <img v-if="item.image_path"
+                    :src="item.image_path"
+                    :alt="item.name"
+                >
+                <v-icon v-else color="primary" large dark>
+                    mdi-account-supervisor-circle
+                </v-icon>
+            </v-avatar>
+        </template>
+
+        <template v-slot:item.is_super="{ item }">
+            <v-switch
+                color="secondary"
+                v-model="item.is_super"
+                @click="updateAdminSuper(item)"
+            ></v-switch>
+        </template>
       
         <template v-slot:item.actions="{ item }">
             <v-btn
@@ -97,11 +116,12 @@
           "items-per-page-options" : [5,10,15, 30 ]
         },
         headers: [
-            { text: "# ID", value: "id" },
+            { text: "Image", align:"start", value: "image" },
+            // { text: "#", align:"start", value: "id" },
             { text: "Name", value: "name" },
             { text: "Username", value: "username" },
             { text: "Super", value: "is_super" },
-            { text: "Actions", value: "actions" },
+            { text: "Actions",  align:"center", value: "actions" },
         ],
         addition_edition_dailog: false,
         admin: {},
@@ -156,7 +176,9 @@
                 username: '',
                 is_super : 0,
                 password: '',
+                image: ''
             }
+
             this.addition_edition_dailog = true
         },
         editAdmin(admin){
@@ -165,9 +187,21 @@
                 name:admin.name,
                 username:admin.username,
                 is_super :admin.is_super,
+                image : admin.image_path,
                 password:'',
             }
+
             this.addition_edition_dailog = true
+        },
+        updateAdminSuper(admin){
+            this.admin = {
+                id:admin.id,
+                name:admin.name,
+                username:admin.username,
+                is_super :admin.is_super,
+                image : admin.image_path,
+            }
+            this.saveAdmin()
         },
         saveAdmin(){
             if(this.admin.id){
@@ -181,7 +215,10 @@
                 })
             }
         },
-        deleteAdmin(admin){
+        async deleteAdmin(admin){
+            let confirm = await this.deleteRecord();
+            if (!confirm) return;
+
             this.$admin.delete('/admin/delete/'+ admin.id).then(({data}) => {
                 this.initialize() 
             })

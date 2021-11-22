@@ -14,7 +14,7 @@
                 :key="item.title"
                 color="secondary"
                 :class="{
-                    'v-list-item--active': activeRoute == item.route
+                    'v-list-item--active': checkIfActive(item.route)
                 }"
                 @click.stop="$router.push(item.route)"
             >
@@ -62,7 +62,7 @@ export default {
     },
     computed : {
         activeRoute () {
-            return this.$route.path
+            return this.$route
         },
         mini_status: {
             get: function() {
@@ -80,6 +80,10 @@ export default {
                 localStorage.removeItem("token")
                 this.$router.push('/login')
             })
+        },
+        checkIfActive(route){
+            let route_text = route.split("/")
+            return route_text[1].includes(this.activeRoute.name)
         }
     },
     

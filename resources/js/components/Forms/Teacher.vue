@@ -47,7 +47,7 @@
                           
                             <v-text-field
                               label="Username*"
-                              required class="pt-1"
+                              required class="pt-2"
                               :rules="usernameRule"
                               v-model="form.username"
                             ></v-text-field>

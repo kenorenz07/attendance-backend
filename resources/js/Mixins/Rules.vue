@@ -27,6 +27,15 @@ export default {
         rfid_numberRule : [
             v => !!v || 'RFID is required',
         ],
+        subjectRule : [
+            v => !!v || 'Subject is required',
+        ],
+        roomRule : [
+            v => !!v || 'Room is required',
+        ],
+        scheduleRule : [
+            v => !!v || 'Schedule is required',
+        ],
     }),
     methods: {
       

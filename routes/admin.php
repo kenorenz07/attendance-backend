@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthenticationController;
+use App\Http\Controllers\Admin\ClassDetailController;
 use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('teacher/create',[TeacherController::class,'create']);
     Route::put('teacher/update/{teacher}',[TeacherController::class,'update']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class,'delete']);
+
+    //Class Details
+    Route::get('class/available',[ClassDetailController::class,'getAvailable']);
+    Route::post('class/create',[ClassDetailController::class,'create']);
 });

@@ -25,7 +25,10 @@ import Axios from './plugins/axios';
 
 
 import App from './layouts/App.vue';
+import moment from 'moment'
 Vue.prototype.$admin = Axios
+Vue.prototype.moment = moment
+
 
 const app = new Vue({
     router,

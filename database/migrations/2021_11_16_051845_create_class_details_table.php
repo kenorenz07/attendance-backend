@@ -18,7 +18,7 @@ class CreateClassDetailsTable extends Migration
             $table->foreignId('room_id')->constrained('rooms');
             $table->foreignId('subject_id')->constrained('subjects');
             $table->foreignId('schedule_id')->constrained('schedules');
-            $table->foreignId('teacher_id')->constrained('teachers')->nullable();
+            $table->foreignId('teacher_id')->nullable()->constrained('teachers');
             $table->timestamps();
         });
     }

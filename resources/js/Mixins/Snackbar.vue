@@ -7,7 +7,7 @@ export default {
             this.$root.$notify(
                 event+" successfully",
                 {
-                     left : false, right : true,bottom : true, top : false
+                    left : false, right : true,bottom : true, top : false
                 },
                 "success"
             )
@@ -16,7 +16,7 @@ export default {
             this.$root.$notify(
                 message,
                 {
-                    left : false, right : true,bottom : false, top : true
+                    left : false, right : true,bottom : true, top : false
                 },
                 "error"
             )

@@ -8,6 +8,10 @@ import Dashboard from '../pages/Admin/Dashboard.vue';
 import Admins from '../pages/Admin/Admins.vue';
 import Teachers from '../pages/Admin/Teachers.vue';
 import Students from '../pages/Admin/Students.vue';
+
+// VIEWS 
+import Teacher from '../pages/Admin/views/Teacher.vue';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -36,6 +40,11 @@ const router = new VueRouter({
                     path: '/teachers',
                     name: 'teachers',
                     component: Teachers,
+                },
+                {
+                    path: '/teacher/:id',
+                    name: 'teacher',
+                    component: Teacher,
                 },
                 {
                     path: '/students',

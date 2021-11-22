@@ -18,6 +18,11 @@
                     sm="12"
                     md="12"
                 >
+                  <v-form
+                    ref="form"
+                    v-model="valid"
+                    lazy-validation
+                  >
                     <v-row>
                         <v-col cols=6>
                           <div>
@@ -46,16 +51,19 @@
                               label="Name*"
                               required
                               v-model="form.name"
+                              :rules="nameRule"
                             ></v-text-field>
                             <v-text-field
                               label="Username*"
                               required
                               type="text"
+                              :rules="usernameRule"
                               v-model="form.username"
                             ></v-text-field>
                             <v-text-field
                               label="Password"
                               required
+                              :rules="form.id ? [] : usernameRule"
                               v-model="form.password"
                               :type="show_pass ? 'text' : 'password'"
                               :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
@@ -67,6 +75,7 @@
                             ></v-switch>
                         </v-col>
                     </v-row>
+                  </v-form>
                 </v-col>
             </v-row>
           </v-container>
@@ -84,7 +93,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$emit('save')"
+            @click="validate"
           >
             Save
           </v-btn>
@@ -114,8 +123,9 @@
         }
     },
     data: () => ({
-        show_pass : false,
-        dialog: false,
+      valid: true,
+      show_pass : false,
+      dialog: false,
     }),
     methods : {
         processImage(e){
@@ -125,6 +135,18 @@
           fileReader.onload = (e) => {
             this.form.image = e.target.result
           }
+        },
+        validate () {
+          if(this.$refs.form.validate()){
+            this.$emit('save')
+            this.resetValidation
+          }
+        },
+        reset () {
+          this.$refs.form.reset()
+        },
+        resetValidation () {
+          this.$refs.form.resetValidation()
         },
     },
     computed : {

@@ -50,7 +50,7 @@ class DatabaseSeeder extends Seeder
             "middle_name" => "teacher 1",
             "last_name" => "teacher 1",
             "rfid_number" => "teacher 1",
-            "email" => "teacher 1",
+            "email" => "teacher@email.com",
             "username" => "teacher 1",
             "password" => "teacher 1",
         ]);
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
             "middle_name" => "student 1",
             "last_name" => "student 1",
             "rfid_number" => "student 1",
-            "email" => "student 1",
+            "email" => "student@email.com",
             "username" => "student 1",
             "password" => "student 1",
         ]);

@@ -3,13 +3,16 @@ export default {
     data: vm => ({}),
     methods: {
       
-        deleteRecord() {
+        deleteRecord(name) {
             return new Promise((resolve, reject) => {
                 this.$root
                     .$confirm(
-                        "Delete admin",
+                        "Delete "+name,
                         "Are you sure you want to delete this data ?",
-                        "",
+                        {
+                            color: 'error',
+                           
+                        },
                         {}
                     )
                     .then(result => {

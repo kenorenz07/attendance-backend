@@ -25,11 +25,13 @@ class AdminController extends Controller
         }
         if($sortBy){
             foreach($sortBy as $key => $sort){
-                if($sortDesc[$key] == "true"){
-                    $admins->orderByDesc($sort);
-                }
-                else{
-                    $admins->orderBy($sort);
+                if($sort != "image"){
+                    if($sortDesc[$key] == "true"){
+                        $admins->orderByDesc($sort);
+                    }
+                    else{
+                        $admins->orderBy($sort);
+                    }
                 }
             }
        }

@@ -17,6 +17,7 @@ class ClassDetail extends Model
         "teacher_id"
     ];
 
+    protected $with = ["room","subject","schedule","teacher","students"] ;
 
     public function room(){
         return $this->belongsTo(Room::class);

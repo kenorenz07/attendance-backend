@@ -1,5 +1,8 @@
+import Vue from 'vue'
 import axios from "axios";
 import router from './router'
+// import Notification from "../Mixins/Snackbar.vue";
+
 const baseURL = '/admin/v1';
 
 const httpClient = axios.create({
@@ -40,14 +43,17 @@ httpClient.interceptors.response.use((response) => {
             messages.push('Opps, something went wrong in processing your request.')
             break;
     }
-
-    //   messages.forEach(message => {
-    //     Vue.toasted.error(message, {
-    //       icon : {
-    //         name : 'alert-circle',
-    //       }
-    //     })
-    //   })
+        
+      messages.forEach(message => {
+        // Notification.methods.errorNotify(message)
+            Vue.toasted.error(message, {
+                theme: "bubble", 
+                position : "bottom-right",
+                duration : 1500,
+                className : "at-toast-error",
+                iconPack: 'material',
+            })
+      })
     console.log(messages)
 });
 

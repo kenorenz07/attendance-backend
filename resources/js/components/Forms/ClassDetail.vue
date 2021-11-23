@@ -217,10 +217,10 @@
           }
         },
         validate () {
-          if(this.$refs.form.validate()){
-            this.$emit('save')
-            this.resetValidation
-          }
+            if(this.$refs.form.validate()){
+                this.$emit('save')
+                    this.reset()
+            }
         },
         reset () {
           this.$refs.form.reset()

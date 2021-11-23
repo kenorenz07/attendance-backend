@@ -132,7 +132,7 @@
           "items-per-page-options" : [5,10,15, 30 ]
         },
         headers: [
-            { text: "#", align:"start", value: "id" },
+            // { text: "#", align:"start", value: "id" },
             { text: "Subject", value: "subject_id" },
             { text: "Room", value: "room_id" },
             { text: "Schedule", value: "schedule_id" },
@@ -187,6 +187,7 @@
                 });
         },
         addClassDetail(){
+            // this.$refs.classDetailForm.resetValidation()
             this.class_detail = {
                 id:null,
                 subject : null,
@@ -198,6 +199,7 @@
             this.addition_edition_dailog = true
         },
         editClassDetail(class_detail){
+            // this.$refs.classDetailForm.resetValidation()
             this.class_detail = {
                 id:class_detail.id,
                 subject : class_detail.subject,
@@ -214,7 +216,7 @@
                 subject_id : this.class_detail.subject.id,
                 room_id : this.class_detail.room.id,
                 schedule_id : this.class_detail.schedule.id,
-                teacher_id : this.class_detail.teacher.id ? this.class_detail.teacher.id : null,
+                teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
             }
 
             if(this.class_detail.id){

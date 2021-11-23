@@ -73,12 +73,13 @@ class ClassDetailController extends Controller
             "teacher_id" => $request->teacher_id,
         ])->exists();
 
-        if($check) return ["error" => "Class is already created"];
+        if($check) return ["error" => "Class already"];
 
         $class_detail = ClassDetail::create([
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
+            "teacher_id" => $request->teacher_id ? $request->teacher_id : null
         ]);
 
         return $class_detail;
@@ -97,8 +98,13 @@ class ClassDetailController extends Controller
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
         ])->exists();
-
-        if($check) return ["error" => "Class is already created"];
+        
+        
+        if($check &&
+            $request->subject_id != $class_detail->subject_id && 
+                $request->room_id != $class_detail->room_id && 
+                    $request->schedule_id != $class_detail->schedule_id) 
+            return ["error" => "Class already exists"];
 
         $class_detail->update([
             "subject_id" => $request->subject_id,

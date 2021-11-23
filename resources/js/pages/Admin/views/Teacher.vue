@@ -56,7 +56,7 @@
                         fab
                         dark
                         color="warning"
-                        small
+                        large
                         v-bind="attrs"
                         v-on="on"
                         @click="editTeacher"
@@ -76,7 +76,7 @@
                         v-bind="attrs"
                         v-on="on"
                         color="primary"
-                        small
+                        large
                         @click="add_class_dialog = true"
                       >
                         <v-icon> mdi-plus </v-icon>
@@ -131,7 +131,7 @@
             >
             <p class="text-h6 mb-0">Schedule :</p>
             <p class="text-subtitle-1 pl-3">
-              {{
+              {{class_detail.schedule.day}} {{
                 moment(class_detail.schedule.time_start, "HH:mm:ss").format(
                   "hh:mm a"
                 ) +
@@ -279,6 +279,7 @@ export default {
     TeacherForm,
   },
   data: () => ({
+    valid: false,
     teacher: {},
     teacher_edit: {},
     add_class_dialog: false,

@@ -17,7 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->time('time_start');
             $table->time('time_end');
-            $table->string('day');
+            $table->enum('day',['MONDAY', 'TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY']);
             $table->timestamps();
         });
     }

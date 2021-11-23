@@ -51,6 +51,7 @@ export default {
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
             { title: 'Admins', icon: 'mdi-account-supervisor', route: '/admins' },
             { title: 'Teachers', icon: 'mdi-account-multiple', route: '/teachers' },
+            { title: 'Classes', icon: 'mdi-book-variant', route: '/classes' },
             { title: 'Students', icon: 'mdi-account', route: '/students' },
         ],
     }),

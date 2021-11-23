@@ -13,7 +13,7 @@
                       :src="
                         teacher.image_path
                           ? teacher.image_path
-                          : 'https://picsum.photos/id/11/500/300'
+                          : '/images/bg_login2.png'
                       "
                     ></v-img>
                   </v-avatar>
@@ -96,10 +96,22 @@
       <p class="text-h5 mx-2">Classes</p>
       <v-divider color="secondary"></v-divider>
     </div>
-    <v-row>
+    <v-row v-if="class_loading">
       <v-col
         cols="4"
-        v-for="class_detail in teacher.class_details"
+        v-for="i in 6"
+        :key="i"
+      >
+        <v-skeleton-loader
+          type="card"
+          height="500"
+        ></v-skeleton-loader>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col
+        cols="4"
+        v-for="class_detail in class_details"
         :key="class_detail.id"
       >
         <v-card color="primary" class="text-white">
@@ -112,18 +124,20 @@
               dark
               color="success"
               small
-              @click="$router.push('teacher/' + teacher.id)"
+              @click="$router.push('/class/' + teacher.id)"
             >
               <v-icon> mdi-eye </v-icon>
             </v-btn>
           </v-card-title>
           <v-card-text class="text-white">
             <p class="text-h6 mb-0">Subject :</p>
-            <span class="text-subtitle-1 pl-3"
-              >{{ class_detail.subject.name }}, Description :
-              {{ class_detail.subject.description }}
+            <span class="text-subtitle-1 pl-3">
+              {{ class_detail.subject.name }} - 
+              <span class="text-subtitle-2">
+                {{ class_detail.subject.description }}
+              </span>
             </span>
-
+             
             <p class="text-h6 mb-0">Room :</p>
             <span class="text-subtitle-1 pl-3"
               >{{ class_detail.room.name }}, Seats available :
@@ -145,166 +159,84 @@
         </v-card>
       </v-col>
     </v-row>
+    <div class="text-center">
+      <v-pagination
+        color="secondary"
+        v-model="pagination.page"
+        :length="pagination.number_of_pages"
+        circle
+      ></v-pagination>
+    </div>
     <TeacherForm
       :form="teacher_edit"
       :dialogState="addition_edition_dailog"
       @close="(addition_edition_dailog = false), initialize()"
       @save="(addition_edition_dailog = false), saveTeacher()"
     />
-    <v-row justify="center">
-      <v-dialog v-model="add_class_dialog" persistent max-width="600px">
-        <v-card>
-          <v-card-title>
-            <span class="text-h5">Create a class</span>
-          </v-card-title>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12" sm="12" md="12">
-                  <v-form
-                    ref="form"
-                    v-model="valid"
-                    lazy-validation
-                  >
-                    <v-select
-                      :items="subjects"
-                      v-model="subject"
-                      label="Select subject"
-                      item-text="name"
-                      item-value="name"
-                      max-height="auto"
-                      autocomplete
-                      required
-                      :rules="subjectRule"
-                      return-object
-                    >
-                      <template slot="item" slot-scope="data">
-                        <template>
-                          <v-list-item-content>
-                            <v-list-item-title
-                              v-html="data.item.name"
-                            ></v-list-item-title>
-                            <v-list-item-subtitle
-                              v-html="data.item.description"
-                            ></v-list-item-subtitle>
-                          </v-list-item-content>
-                        </template>
-                      </template>
-                    </v-select>
-                    <v-select
-                      :items="rooms"
-                      v-model="room"
-                      label="Select room"
-                      item-text="name"
-                      item-value="name"
-                      max-height="auto"
-                      autocomplete
-                      return-object
-                      required
-                      :rules="roomRule"
-                    >
-                      <template slot="item" slot-scope="data">
-                        <template>
-                          <v-list-item-content>
-                            <v-list-item-title
-                              v-html="data.item.name"
-                            ></v-list-item-title>
-                            <v-list-item-subtitle
-                              v-html="data.item.seats + ' seat/s'"
-                            ></v-list-item-subtitle>
-                          </v-list-item-content>
-                        </template>
-                      </template>
-                    </v-select>
-                    <v-select
-                      :items="schedules"
-                      v-model="schedule"
-                      label="Select schedule"
-                      item-text="id"
-                      item-value="id"
-                      max-height="auto"
-                      autocomplete
-                      return-object
-                      required
-                      :rules="scheduleRule"
-                    >
-                      <template slot="selection" slot-scope="data">
-                        <!-- HTML that describe how select should render selected items -->
-                        {{ data.item.day +" "+ moment(data.item.time_start, "HH:mm:ss").format(
-                              "hh:mm a"
-                              ) +
-                              " - " +
-                              moment(data.item.time_end, "HH:mm:ss").format(
-                              "hh:mm a"
-                              )}}
-                      </template>
-                      <template slot="item" slot-scope="data">
-                        <template>
-                          <v-list-item-content>
-                            <v-list-item-title
-                              v-html="data.item.day"
-                            ></v-list-item-title>
-                            <v-list-item-subtitle>
-                              {{moment(data.item.time_start, "HH:mm:ss").format(
-                              "hh:mm a"
-                              ) +
-                              " - " +
-                              moment(data.item.time_end, "HH:mm:ss").format(
-                              "hh:mm a"
-                              )}}
-                            </v-list-item-subtitle>
-                          </v-list-item-content>
-                        </template>
-                      </template>
-                    </v-select>
-                  </v-form>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text @click="add_class_dialog = false"> Cancel </v-btn>
-            <v-btn text @click="addClass"> Add class details </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
+    <ClassDetail 
+      :form="class_detail"  
+      :dialogState="add_class_dialog"     
+      :is_from_teacher="true"
+      @close="add_class_dialog = false, initialize()"
+      @save="add_class_dialog = false, addClass()"
+    />
   </div>
 </template>
 <script>
 import TeacherForm from "../../../components/Forms/Teacher.vue";
+import ClassDetail from "../../../components/Forms/ClassDetail.vue";
 export default {
   components: {
     TeacherForm,
+    ClassDetail
   },
   data: () => ({
     valid: false,
     teacher: {},
     teacher_edit: {},
     add_class_dialog: false,
+    class_loading: false,
     addition_edition_dailog: false,
-    schedules : [],
-    schedule : null,
-    rooms : [],
-    room : null,
-    subjects : [],
-    subject : null
+    class_details : [],
+    class_detail : {
+      subject : null,
+      schedule : null,
+      room : null,
+      teacher : null
+    },
+    pagination:{ 
+      page : 1,
+      number_of_pages : 1
+    }
   }),
   mounted() {
     this.initialize();
   },
+  watch : {
+    "pagination.page" : function (newVal, oldVal){
+      console.log(oldVal,newVal)
+      this.initialize()
+     },
+  },
   methods: {
     initialize() {
-        this.$admin.get("teacher/" + this.$route.params.id).then(({ data }) => {
-            this.teacher = data;
-        });
-        this.$admin.get("class/available").then(({ data }) => {
-            this.availabe_classes = data.availabe_classes;
-            this.subjects = data.subjects;
-            this.rooms = data.rooms;
-            this.schedules = data.schedules;
-        });
+      this.class_loading = true
+
+      this.$admin.get("teacher/" + this.$route.params.id).then(({ data }) => {
+        this.teacher = data;
+      });
+
+      let params = {
+        page: this.pagination.page
+      }
+
+      this.$admin.get("teacher/classes/" + this.$route.params.id,{ params }).then(({data}) => {
+        this.class_details = data.data
+        this.pagination.page = data.current_page
+        this.pagination.number_of_pages = data.last_page
+        this.class_loading = false
+      })
+      
     },
     editTeacher() {
       this.teacher_edit = {
@@ -330,11 +262,10 @@ export default {
         });
     },
     addClass(){
-      if(!this.$refs.form.validate()) return
       this.$admin.post('class/create',{
-        subject_id : this.subject.id,
-        room_id : this.room.id,
-        schedule_id : this.schedule.id,
+        subject_id : this.class_detail.subject.id,
+        room_id : this.class_detail.room.id,
+        schedule_id : this.class_detail.schedule.id,
         teacher_id : this.teacher.id,
       }).then(({data}) => {
         if(data.error){
@@ -342,10 +273,12 @@ export default {
         }
         else {
 
-          this.add_class_dialog = false
-          this.room = {}
-          this.subject = {}
-          this.schedule = {}
+          this.class_detail = {
+            subject : null,
+            schedule : null,
+            room : null,
+            teacher : null
+          }
           this.successNotify("Class created")
           this.initialize()
           this.$refs.form.resetValidation()

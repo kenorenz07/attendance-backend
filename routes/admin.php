@@ -3,6 +3,9 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ClassDetailController;
+use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,12 +37,28 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
 
     // TEACHER
     Route::get('teacher/all',[TeacherController::class,'getAll']);
+    Route::get('teacher/index',[TeacherController::class,'index']);
+    Route::get('teacher/classes/{teacher}',[TeacherController::class,'classess']);
     Route::get('teacher/{teacher}',[TeacherController::class,'show']);
     Route::post('teacher/create',[TeacherController::class,'create']);
     Route::put('teacher/update/{teacher}',[TeacherController::class,'update']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class,'delete']);
 
-    //Class Details
+    // SUBJECTS
+    Route::get('subject/index',[SubjectController::class,'index']);
+
+    // ROOMS
+    Route::get('room/index',[RoomController::class,'index']);
+
+    // SCHEDULES
+    Route::get('schedule/index',[ScheduleController::class,'index']);
+
+    //CLASS DETAILS
     Route::get('class/available',[ClassDetailController::class,'getAvailable']);
+    Route::get('class/all',[ClassDetailController::class,'getAll']);
     Route::post('class/create',[ClassDetailController::class,'create']);
+    Route::put('class/update/{class_detail}',[ClassDetailController::class,'update']);
+    Route::delete('class/delete/{class_detail}',[ClassDetailController::class,'delete']);
+    
+
 });

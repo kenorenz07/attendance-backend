@@ -19,6 +19,12 @@ class ClassDetail extends Model
 
     protected $with = ["room","subject","schedule","teacher","students"] ;
 
+    protected $appends = ["student_count"];
+
+    public function getStudentCountAttribute(){
+        return $this->students()->count();
+    }
+    
     public function room(){
         return $this->belongsTo(Room::class);
     }

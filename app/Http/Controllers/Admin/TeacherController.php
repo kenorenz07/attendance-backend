@@ -47,6 +47,16 @@ class TeacherController extends Controller
         return $teacher->load('class_details');
     }
 
+    public function index()
+    {
+        return Teacher::all();
+    }
+
+    public function classess(Teacher $teacher)
+    {
+        return $teacher->class_details()->paginate(6);
+    }
+
     public function create(Request $request)
     {
         $request->validate([

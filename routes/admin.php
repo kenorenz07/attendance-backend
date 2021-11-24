@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ClassDetailController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherController;
 use Illuminate\Http\Request;
@@ -44,6 +45,14 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::put('teacher/update/{teacher}',[TeacherController::class,'update']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class,'delete']);
 
+    Route::get('student/all',[StudentController::class,'getAll']);
+    Route::get('student/index',[StudentController::class,'index']);
+    Route::get('student/classes/{student}',[StudentController::class,'classess']);
+    Route::get('student/{student}',[StudentController::class,'show']);
+    Route::post('student/create',[StudentController::class,'create']);
+    Route::put('student/update/{student}',[StudentController::class,'update']);
+    Route::delete('student/delete/{student}',[StudentController::class,'delete']);    
+
     // SUBJECTS
     Route::get('subject/index',[SubjectController::class,'index']);
 
@@ -56,8 +65,11 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     //CLASS DETAILS
     Route::get('class/available',[ClassDetailController::class,'getAvailable']);
     Route::get('class/all',[ClassDetailController::class,'getAll']);
+    Route::get('class/{class_detail}',[ClassDetailController::class,'show']);
     Route::post('class/create',[ClassDetailController::class,'create']);
     Route::put('class/update/{class_detail}',[ClassDetailController::class,'update']);
+    Route::post('class/add-student/{class_detail}',[ClassDetailController::class,'addStudentToClass']);
+    Route::delete('class/remove-student/{class_detail}',[ClassDetailController::class,'removeStudentFromClass']);
     Route::delete('class/delete/{class_detail}',[ClassDetailController::class,'delete']);
     
 

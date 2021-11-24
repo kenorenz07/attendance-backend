@@ -225,6 +225,10 @@
             if (!confirm) return;
 
             this.$admin.delete('/teacher/delete/'+ teacher.id).then(({data}) => {
+                if(data.error){
+                    this.errorNotify(data.error)
+                    return
+                }
                 this.initialize() 
                 this.successNotify("Deleted teacher")
             })

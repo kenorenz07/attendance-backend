@@ -11,6 +11,8 @@ class ClassDetailStudent extends Model
 
     protected $fillable = ['class_detail_id','student_id'];
     
+    protected $with = ['attendances'];
+    
     public function class_detail(){
         return $this->belongsTo(ClassDetail::class);
     }

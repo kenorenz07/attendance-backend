@@ -58,6 +58,10 @@ class ClassDetailController extends Controller
         return ClassDetail::whereNull('teacher_id')->get();
     }
 
+    public function show(ClassDetail $class_detail)
+    {
+        return $class_detail;
+    }
     public function create(Request $request)
     {
         $request->validate([
@@ -116,12 +120,23 @@ class ClassDetailController extends Controller
         return $class_detail;
     }
 
+    public function addStudentToClass(ClassDetail $class_detail,Request $request)
+    {
+        return $class_detail->students()->create(['student_id' => $request->student_id]);
+    }
+    
+    public function removeStudentFromClass(ClassDetail $class_detail,Request $request)
+    {
+        return $class_detail->students()->where('student_id',$request->student_id)->delete();
+    }
+
     public function delete(ClassDetail $class_detail)
     {
         if($class_detail->students()->exists()) return ["error" => "There are students that is in this class"];
         
         return $class_detail->delete();
     }
+    
 
   
 }

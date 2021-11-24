@@ -12,7 +12,7 @@ import ClassDetails from '../pages/Admin/ClassDetails.vue';
 
 // VIEWS 
 import Teacher from '../pages/Admin/views/Teacher.vue';
-import ClassDetail from '../pages/Admin/views/Class.vue';
+import ClassDetail from '../pages/Admin/views/ClassDetail.vue';
 
 Vue.use(VueRouter);
 
@@ -49,13 +49,13 @@ const router = new VueRouter({
                     component: Teacher,
                 },
                 {
-                    path: '/classes',
-                    name: 'classes',
+                    path: '/class-details',
+                    name: 'class-details',
                     component: ClassDetails,
                 },
                 {
-                    path: '/class/:id',
-                    name: 'class',
+                    path: '/class-detail/:id',
+                    name: 'class-detail',
                     component: ClassDetail,
                 },
                 {

@@ -30,10 +30,12 @@ class TeacherController extends Controller
             foreach($sortBy as $key => $sort){
                 if($sort != "image"){
                     if($sortDesc[$key] == "true"){
-                        $teachers->orderByDesc($sort);
+                        if($sort == "display_name") $teachers->orderByDesc("first_name");
+                        else $teachers->orderByDesc($sort);
                     }
                     else{
-                        $teachers->orderBy($sort);
+                        if($sort == "display_name") $teachers->orderBy("first_name");
+                        else $teachers->orderBy($sort);
                     }
                 }
             }
@@ -113,7 +115,7 @@ class TeacherController extends Controller
 
         if(str_contains($request->image,'base64')){
 
-            $fileName = uploadImage("admin_",$request->image);
+            $fileName = uploadImage("teacher_",$request->image);
             
             if($teacher->image){
                 Storage::delete('/public/'.$teacher->image->name);
@@ -131,6 +133,9 @@ class TeacherController extends Controller
 
     public function delete(Teacher $teacher)
     {
+        if($teacher->class_details()->exists()) 
+            return ["error" => "This teacher belongs to a class"];
+            
         if($teacher->image){
             Storage::delete('/public/'.$teacher->image->name);
             $teacher->image()->delete();

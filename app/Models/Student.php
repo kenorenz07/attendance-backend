@@ -28,9 +28,33 @@ class Student extends Authenticatable
         "password",
     ];
 
+    protected $appends = ['image_path',"full_name","display_name"];
+
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
+    }
+     
+    public function getFullnameAttribute()
+    {
+        $fullname = '';
+        if ($this->first_name) $fullname = ucfirst($this->first_name);
+        if ($this->middle_name) $fullname = ' '. ucfirst($this->middle_name);
+        if ($this->last_name) $fullname .= ' '.ucfirst($this->last_name);
+        return $fullname;
+    }
+
+    public function getDisplaynameAttribute()
+    {
+        $fullname = '';
+        if ($this->first_name) $fullname = ucfirst($this->first_name);
+        if ($this->last_name) $fullname .= ' '.ucfirst($this->last_name);
+        return $fullname.' ('.$this->email.')';
+    }
+
+    public function getImagePathAttribute()
+    {
+        return $this->image()->first() ? '/storage/'.$this->image()->first()->name : null;
     }
 
     public function class_details(){

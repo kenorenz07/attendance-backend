@@ -71,7 +71,7 @@
                         dark
                         color="success"
                         small
-                        @click="$router.push('class_detail/'+item.id)"
+                        @click="$router.push('class-detail/'+item.id)"
                     >
                         <v-icon >
                             mdi-eye
@@ -187,7 +187,6 @@
                 });
         },
         addClassDetail(){
-            // this.$refs.classDetailForm.resetValidation()
             this.class_detail = {
                 id:null,
                 subject : null,
@@ -199,7 +198,6 @@
             this.addition_edition_dailog = true
         },
         editClassDetail(class_detail){
-            // this.$refs.classDetailForm.resetValidation()
             this.class_detail = {
                 id:class_detail.id,
                 subject : class_detail.subject,
@@ -245,6 +243,10 @@
             if (!confirm) return;
 
             this.$admin.delete('/class/delete/'+ class_detail.id).then(({data}) => {
+                if(data.error){
+                    this.errorNotify(data.error)
+                    return
+                }
                 this.initialize() 
                 this.successNotify("Deleted class_detail")
             })

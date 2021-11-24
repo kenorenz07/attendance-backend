@@ -34,7 +34,6 @@ class Teacher extends Authenticatable
         return $this->morphOne(Image::class, 'imageable');
     }
 
-   
     public function getFullnameAttribute()
     {
         $fullname = '';

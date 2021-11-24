@@ -191,7 +191,6 @@ export default {
     ClassDetail
   },
   data: () => ({
-    valid: false,
     teacher: {},
     teacher_edit: {},
     add_class_dialog: false,

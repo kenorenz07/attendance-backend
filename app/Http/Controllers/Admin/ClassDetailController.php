@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassDetail;
+use App\Models\ClassDetailStudent;
 use App\Models\Room;
 use App\Models\Schedule;
 use App\Models\Subject;
@@ -23,14 +24,14 @@ class ClassDetailController extends Controller
 
         if($request->query('search_key')){
             $class_details
-                ->WhereHas('room', function ($query) use($request){
+                ->whereHas('room', function ($query) use($request){
                     return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
                 })
                 ->orWhereHas('subject', function ($query) use($request){
                     return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
                 })
                 ->orWhereHas('teacher', function ($query) use($request){
-                    return $query->Where("last_name", 'LIKE', "%".$request->query('search_key')."%")
+                    return $query->where("last_name", 'LIKE', "%".$request->query('search_key')."%")
                         ->orWhere("first_name", 'LIKE', "%".$request->query('search_key')."%")
                         ->orWhere("middle_name", 'LIKE', "%".$request->query('search_key')."%")
                         ->orWhere("email", 'LIKE', "%".$request->query('search_key')."%")
@@ -58,6 +59,26 @@ class ClassDetailController extends Controller
         return ClassDetail::whereNull('teacher_id')->get();
     }
 
+    public function getClassStudents(ClassDetail $class_detail,Request $request)
+    {
+        $per_page = $request->query('per_page') ? $request->query('per_page') : 5;
+
+        // $students = $class_detail->students()->query();
+        $students = ClassDetailStudent::query()->with('student');
+
+        $students->where('class_detail_id',$class_detail->id);
+
+        if($request->query("search_key")){
+            $students->whereHas('student', function ($query) use($request){
+                return $query->where("last_name", 'LIKE', "%".$request->query('search_key')."%")
+                ->orWhere("first_name", 'LIKE', "%".$request->query('search_key')."%")
+                ->orWhere("middle_name", 'LIKE', "%".$request->query('search_key')."%")
+                ->orWhere("email", 'LIKE', "%".$request->query('search_key')."%");
+            });
+        }
+        
+        return $students->paginate($per_page);
+    }
     public function show(ClassDetail $class_detail)
     {
         return $class_detail;

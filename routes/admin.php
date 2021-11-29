@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ClassDetailController;
+use App\Http\Controllers\Admin\ClassDetailStudentController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\StudentController;
@@ -65,6 +66,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     //CLASS DETAILS
     Route::get('class/available',[ClassDetailController::class,'getAvailable']);
     Route::get('class/all',[ClassDetailController::class,'getAll']);
+    Route::get('class/{class_detail}/students',[ClassDetailController::class,'getClassStudents']);
     Route::get('class/{class_detail}',[ClassDetailController::class,'show']);
     Route::post('class/create',[ClassDetailController::class,'create']);
     Route::put('class/update/{class_detail}',[ClassDetailController::class,'update']);
@@ -72,5 +74,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::delete('class/remove-student/{class_detail}',[ClassDetailController::class,'removeStudentFromClass']);
     Route::delete('class/delete/{class_detail}',[ClassDetailController::class,'delete']);
     
-
+    //CLASS DETAIL STUDENT
+    Route::get('/class-detail-student/{class_detail_student}/attendances',[ClassDetailStudentController::class,"getAttendance"]);
 });

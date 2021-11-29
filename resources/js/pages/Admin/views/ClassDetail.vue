@@ -4,59 +4,44 @@
             <v-card-title>
                 <v-row>
                     <v-col>
-                        <h3>Class ID: {{$route.params.id}}</h3>
+                        <h3>Class Details: # {{$route.params.id}}</h3>
                         <v-row>
-                            <v-col cols="5">
+                            <v-col cols="6">
                                 <div> Teacher</div>
-                                <div v-if="class_detail.teacher" class="d-flex">
+                                <div class="d-flex" v-if="class_detail.teacher">
                                     <v-avatar size="100" class="mt-5">
                                         <v-img
                                             :src="
-                                                class_detail.teacher
+                                                class_detail.teacher.image_path
                                                 ? class_detail.teacher.image_path
                                                 : '/images/bg_login2.png'
                                             "
                                         ></v-img>
                                     </v-avatar>
-                                    <!-- </v-col>
-                                                    <v-col> -->
                                     <div class="pl-5">
                                         <p class="mb-0 mt-2">Name: {{ class_detail.teacher.full_name }}</p>
-                                        <p class="mb-0 text-subtitle-1">
-                                        Email: {{ class_detail.teacher.email }}
-                                        </p>
-                                        <p class="mb-0 text-subtitle-1">
-                                        Username: {{ class_detail.teacher.username }}
-                                        </p>
-                                        <p class="mb-0 text-subtitle-1">
-                                        RFID #: {{ class_detail.teacher.rfid_number }}
-                                        </p>
+                                        <p class="mb-0 text-subtitle-1">Email: {{ class_detail.teacher.email }}</p>
+                                        <p class="mb-0 text-subtitle-1">Username: {{ class_detail.teacher.username }}</p>
+                                        <p class="mb-0 text-subtitle-1"> RFID #: {{ class_detail.teacher.rfid_number }}</p>
                                     </div>
                                 </div>
                                 <div v-else>
                                     Not assigned
                                 </div>
                             </v-col>
-                            <v-col>
-                                <div>
-                                    <p class="text-center">Subject</p>
-                                    <p class="text-subtitle-1 text-center">{{class_detail.subject.name}}</p>
-                                    <p class="text-subtitle-1 text-center"> {{ class_detail.subject.description }}</p>
-                                </div>
-                            </v-col>
                             <v-divider color="gray" vertical></v-divider>
                             <v-col>
-                                <div>
-                                    <p class=" text-center">Room</p>
-                                    <p class="text-subtitle-1 text-center">{{class_detail.room.name}}</p>
-                                    <p class="ttext-subtitle-1 text-center">Seats available :{{ class_detail.room.seats ? class_detail.room.seats : 0 }} seat/s</p>
+                                <div v-if="class_detail.subject" >
+                                    <div class="">Subject</div>
+                                    <div class="text-subtitle-1 ml-2">{{class_detail.subject.name}} - {{ class_detail.subject.description }}</div>
                                 </div>
-                            </v-col>
-                            <v-divider color="gray" vertical></v-divider>
-                            <v-col>
-                                <div>
-                                    <p class=" text-center">Schedule</p>
-                                    <p class="text-subtitle-1 text-center">
+                                <div v-if="class_detail.room" >
+                                    <div class="">Room</div>
+                                    <div class="text-subtitle-1 ml-2">{{class_detail.room.name}} ({{ class_detail.room.seats ? class_detail.room.seats : 0 }} seat/s)</div>
+                                </div>
+                                <div v-if="class_detail.schedule" >
+                                    <div class="">Schedule</div>
+                                    <div class="text-subtitle-2 ml-2">
                                         {{class_detail.schedule.day}} {{
                                             moment(class_detail.schedule.time_start, "HH:mm:ss").format(
                                             "hh:mm a"
@@ -66,10 +51,9 @@
                                             "hh:mm a"
                                             )
                                         }}
-                                    </p>
+                                    </div>
                                 </div>
                             </v-col>
-                            <v-divider color="gray" vertical></v-divider>
                             <v-divider color="gray" vertical></v-divider>
                             <v-col>
                                 <p class="text-h6 text-center">ACTIONS</p>
@@ -116,40 +100,72 @@
                 </v-row>
             </v-card-title>
         </v-card>
+        <v-row>
+            <v-col cols="4">
+                <v-data-table
+                    :footer-props="studentTable.footerProps"
+                    :page="studentTable.page"
+                    :pageCount="studentTable.numberOfPages"
+                    :headers="studentTable.headers"
+                    :options.sync="studentTable.options"
+                    :items="students"
+                    @update:options="studentsInitialize"
+                    :server-items-length="studentTable.total"
+                    :single-select="true"
+                    item-key="id"
+                    show-select
+                    v-model="selected_student"
+                    checkbox-color="primary"
+                    class="elevation-1"
+                >
+                    <template v-slot:item.display_name="{ item }">
+                        {{item.student.display_name}}
+                    </template>
+                </v-data-table>
+            </v-col>
+            <v-col cols='8'>
+                <calendar v-if="selected_student.length > 0" :class_detail_student="selected_student[0]"  />
+            </v-col>
+        </v-row>
     </div>
 </template>
 <script>
 import ClassDetail from "../../../components/Forms/ClassDetail.vue";
+import Calendar from "../../../components/Calendar.vue";
 export default {
     components : {
-        ClassDetail
+        ClassDetail,
+        Calendar
     },
     data : () => ({
         class_detail : {},
         students : [],
         student_loading : false,
         addition_edition_dailog : false,  
+        selected_student : [],
         studentTable : {
             page: 0,
             total: 0,
             numberOfPages: 0,
             footerProps :{
-                "items-per-page-options" : [5,10,15, 30 ]
+                "items-per-page-options" : [10]
             },
             search_key : '',
             headers: [
-                // { text: "#", align:"start", value: "id" },
-                { text: "Image", value: "image_path" },
                 { text: "Name", value: "display_name" },
-                { text: "RFID #", value: "rfid_number" },
-                { text: "username", value: "username" },
-                { text: "Actions",  align:"center", value: "actions" },
             ],
             options : {}
         }
     }),
     created () {
         this.initialize()
+    },
+    watch : {
+        'studentTable.search_key' : {
+            handler(val){
+                this.initialize()
+            }
+        }
     },
     methods : {
         initialize () {
@@ -163,13 +179,29 @@ export default {
             this.student_loading = true;
             const { page, itemsPerPage,sortBy,sortDesc } = this.studentTable.options;
 
+
             let params = { 
                 page: page,
                 per_page: itemsPerPage,
-                sortBy: sortBy,
-                sortDesc: sortDesc,
-                search_key: this.search_key
-            } 
+                // sortBy: sortBy,
+                // sortDesc: sortDesc,
+                search_key: this.studentTable.search_key
+            }
+
+            console.log(params,'ss')
+
+            this.$admin.get(`class/${this.$route.params.id}/students`,{params}).then(({data}) => {
+                this.student_loading = false
+                this.studentTable.page = data.page
+                this.studentTable.total =  data.total
+                this.studentTable.numberOfPages = data.last_page
+
+                this.students = data.data
+
+                if(this.selected_student.length < 1){
+                    this.selected_student.push(data.data[0])
+                }
+            })
         },
         editClassDetail(){
             

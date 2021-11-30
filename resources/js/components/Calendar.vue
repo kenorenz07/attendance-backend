@@ -32,7 +32,7 @@
           </v-toolbar-title>
         </v-toolbar>
       </v-sheet>
-      <v-sheet height="500">
+      <v-sheet height="500" v-show="!calendar_loading">
         <v-calendar
           ref="calendar"
           v-model="focus"
@@ -51,36 +51,27 @@
         >
           <v-card
             color="grey lighten-4"
-            min-width="350px"
+            min-width="150px"
             flat
           >
             <v-toolbar
               :color="selectedEvent.color"
               dark
             >
-              <v-btn icon>
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
               <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-              <v-spacer></v-spacer>
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
-              <v-btn icon>
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
             </v-toolbar>
             <v-card-text>
-              <span v-html="selectedEvent.details"></span>
+              <div class="text-subtitle-1"> Time in : {{moment(selectedEvent.time_in, "HH:mm:ss").format("hh:mm a")}}</div>
+              <div class="text-subtitle-1"> Time out: {{moment(selectedEvent.time_out, "HH:mm:ss").format("hh:mm a")}}</div>
             </v-card-text>
             <v-card-actions>
-              <v-btn
-                text
-                color="secondary"
-                @click="selectedOpen = false"
-              >
-                Cancel
-              </v-btn>
+                <v-icon
+                    large
+                    :color="selectedEvent.color"
+                    @click="selectedOpen = false"
+                >
+                    mdi-close-circle-outline
+                </v-icon>
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -102,12 +93,26 @@
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
+      calendar_loading : false,
       events: [],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
       colors: ['primary', 'secondary', 'accent', 'error', 'warning', ],
     }),
     mounted () {
-      this.$refs.calendar.checkChange()
+        this.$refs.calendar.checkChange()
+    },
+    watch : {
+        'class_detail_student.id' : {
+            handler (val){
+                console.log(this.$refs.calendar)
+                if(this.$refs.calendar){
+                    this.updateRange({
+                        start : this.$refs.calendar.lastStart,
+                        end : this.$refs.calendar.lastEnd
+                    })
+                }
+            }
+        }
     },
     methods: {
         getEventColor (event) {
@@ -139,6 +144,10 @@
             nativeEvent.stopPropagation()
         },
         updateRange ({ start, end }) {
+            console.log(start,end,'calendar')
+
+            this.calendar_loading = true
+
             let params = {
                 start_date : start.date,
                 end_date : end.date
@@ -146,9 +155,11 @@
             
             this.$admin.get(`/class-detail-student/${this.class_detail_student.id}/attendances`,{params}).then(({data}) => {
                 this.events = data
+                this.calendar_loading = false
             })
 
-                console.log(start,end,'calendar')
+
+
             // const events = []
 
             // const min = new Date(`${start.date}T00:00:00`)
@@ -173,9 +184,6 @@
             // }
 
             // this.events = events
-        },
-        rnd (a, b) {
-            return Math.floor((b - a + 1) * Math.random()) + a
         },
     },
   }

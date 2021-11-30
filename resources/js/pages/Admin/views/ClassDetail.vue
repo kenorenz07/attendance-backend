@@ -100,33 +100,42 @@
                 </v-row>
             </v-card-title>
         </v-card>
-        <v-row>
-            <v-col cols="4">
-                <v-data-table
-                    :footer-props="studentTable.footerProps"
-                    :page="studentTable.page"
-                    :pageCount="studentTable.numberOfPages"
-                    :headers="studentTable.headers"
-                    :options.sync="studentTable.options"
-                    :items="students"
-                    @update:options="studentsInitialize"
-                    :server-items-length="studentTable.total"
-                    :single-select="true"
-                    item-key="id"
-                    show-select
-                    v-model="selected_student"
-                    checkbox-color="primary"
-                    class="elevation-1"
-                >
-                    <template v-slot:item.display_name="{ item }">
-                        {{item.student.display_name}}
-                    </template>
-                </v-data-table>
-            </v-col>
-            <v-col cols='8'>
-                <calendar v-if="selected_student.length > 0" :class_detail_student="selected_student[0]"  />
-            </v-col>
-        </v-row>
+        <div class="d-flex mt-4">
+            <v-divider color="secondary"></v-divider>
+                <p class="text-h5 mx-2">Attendances</p>
+            <v-divider color="secondary"></v-divider>
+        </div>
+        <v-card class="mx-auto px-5 py-5 mt-3" color="secondary" elevation="4" outlined>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="4">
+                        <v-data-table
+                            :footer-props="studentTable.footerProps"
+                            :page="studentTable.page"
+                            :pageCount="studentTable.numberOfPages"
+                            :headers="studentTable.headers"
+                            :options.sync="studentTable.options"
+                            :items="students"
+                            @update:options="studentsInitialize"
+                            :server-items-length="studentTable.total"
+                            :single-select="true"
+                            item-key="id"
+                            show-select
+                            v-model="selected_student"
+                            checkbox-color="primary"
+                            class="elevation-1"
+                        >
+                            <template v-slot:item.display_name="{ item }">
+                                {{item.student.display_name}}
+                            </template>
+                        </v-data-table>
+                    </v-col>
+                    <v-col cols='8'>
+                        <calendar v-if="selected_student.length > 0" :class_detail_student="selected_student[0]"  />
+                    </v-col>
+                </v-row>
+            </v-card-text>
+        </v-card>
     </div>
 </template>
 <script>

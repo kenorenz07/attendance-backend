@@ -77,6 +77,8 @@ class DatabaseSeeder extends Seeder
             }
         }
         
+        $this->call(AttendanceSeeder::class);
+
         Artisan::call('passport:install');
         Artisan::call('storage:link');
         Artisan::call('key:generate');

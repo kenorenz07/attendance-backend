@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ClassDetailStudentController extends Controller
 {
-    public function chekRemark($remark,$name)
+    public function checkRemark($remark,$name)
     {
         switch($remark){
             case Attendance::ABSENT :
@@ -36,17 +36,20 @@ class ClassDetailStudentController extends Controller
 
         $attendances = $class_detail_student->attendances()->whereBetween('date_of_attendance',[$start_date,$end_date])->get();
         
-        $attendances->map(function($attendance, $key) {
+        $map_attendance = $attendances->map(function($attendance, $key) {
             return [
                 "name" => $this->checkRemark($attendance->remarks,true),
                 "start" => $attendance->date_of_attendance,
                 "end" => $attendance->date_of_attendance,
                 "color" => $this->checkRemark($attendance->remarks,false),
                 "timed" => false,
+                "time_in" => $attendance->time_in,  
+                "time_out" => $attendance->time_out,  
+                "date_of_attendance" => $attendance->date_of_attendance,  
             ];
         });
 
-        return $attendances;
+        return $map_attendance;
 
     }
 }

@@ -7,6 +7,7 @@ use App\Models\ClassDetail;
 use App\Models\ClassDetailStudent;
 use App\Models\Room;
 use App\Models\Schedule;
+use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -78,6 +79,16 @@ class ClassDetailController extends Controller
         }
         
         return $students->paginate($per_page);
+    }
+
+    public function addClassStudents(ClassDetail $class_detail,Request $request)
+    {
+        foreach($request->student_ids as $id ) {
+            $class_detail->students()->create([
+                "student_id" => $id 
+            ]);
+        }
+        return 'Success';
     }
     public function show(ClassDetail $class_detail)
     {

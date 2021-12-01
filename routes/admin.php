@@ -46,6 +46,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::put('teacher/update/{teacher}',[TeacherController::class,'update']);
     Route::delete('teacher/delete/{teacher}',[TeacherController::class,'delete']);
 
+    // STUDENTS
     Route::get('student/all',[StudentController::class,'getAll']);
     Route::get('student/index',[StudentController::class,'index']);
     Route::get('student/classes/{student}',[StudentController::class,'classess']);
@@ -67,6 +68,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::get('class/available',[ClassDetailController::class,'getAvailable']);
     Route::get('class/all',[ClassDetailController::class,'getAll']);
     Route::get('class/{class_detail}/students',[ClassDetailController::class,'getClassStudents']);
+    Route::post('class/{class_detail}/add-students',[ClassDetailController::class,'addClassStudents']);
     Route::get('class/{class_detail}',[ClassDetailController::class,'show']);
     Route::post('class/create',[ClassDetailController::class,'create']);
     Route::put('class/update/{class_detail}',[ClassDetailController::class,'update']);

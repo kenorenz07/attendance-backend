@@ -245,7 +245,7 @@
             this.$admin.delete('/class/delete/'+ class_detail.id).then(({data}) => {
                 if(data.error){
                     this.errorNotify(data.error)
-                    return
+                    
                 }
                 this.initialize() 
                 this.successNotify("Deleted class_detail")

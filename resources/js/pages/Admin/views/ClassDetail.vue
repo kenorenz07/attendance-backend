@@ -68,7 +68,7 @@
                                                 large
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                @click="editClassDetail"
+                                                @click="addition_edition_dailog = true"
                                             >
                                                 <v-icon> mdi-circle-edit-outline </v-icon>
                                             </v-btn>
@@ -86,12 +86,12 @@
                                                 v-on="on"
                                                 color="primary"
                                                 large
-                                                @click="add_class_dialog = true"
+                                                @click="add_student_dialog = true"
                                             >
-                                                <v-icon> mdi-plus </v-icon>
+                                                <v-icon> mdi-account-plus </v-icon>
                                             </v-btn>
                                         </template>
-                                        <span>Add class</span>
+                                        <span>Add student</span>
                                     </v-tooltip>
                                 </div>
                             </v-col>
@@ -105,7 +105,7 @@
                 <p class="text-h5 mx-2">Attendances</p>
             <v-divider color="secondary"></v-divider>
         </div>
-        <v-card class="mx-auto px-5 py-5 mt-3" color="secondary" elevation="4" outlined>
+        <v-card class="mx-auto px-5 py-5 mt-3" color="primary" elevation="4" outlined>
             <v-card-text>
                 <v-row>
                     <v-col cols="4">
@@ -122,7 +122,7 @@
                             item-key="id"
                             show-select
                             v-model="selected_student"
-                            checkbox-color="primary"
+                            checkbox-color="secondary"
                             class="elevation-1"
                         >
                             <template v-slot:item.display_name="{ item }">
@@ -136,17 +136,36 @@
                 </v-row>
             </v-card-text>
         </v-card>
+        <ClassDetail 
+            :form="class_detail"  
+            :dialogState="addition_edition_dailog"     
+            @close="addition_edition_dailog = false"
+            @save="addition_edition_dailog = false, saveClassDetail()"
+        />
+        <AddStudent 
+            :form="chosen_students"
+            :dialogState="add_student_dialog"
+            :class_id ="$route.params.id"
+            @close="add_student_dialog = false"
+            @save="add_student_dialog =false,addStudentsToClass()"
+        /> 
     </div>
 </template>
 <script>
 import ClassDetail from "../../../components/Forms/ClassDetail.vue";
+import AddStudent from "../../../components/Forms/AddStudent.vue";
 import Calendar from "../../../components/Calendar.vue";
 export default {
     components : {
         ClassDetail,
-        Calendar
+        Calendar,
+        AddStudent
     },
     data : () => ({
+        chosen_students: {
+            ids : []
+        },
+        add_student_dialog: false,
         class_detail : {},
         students : [],
         student_loading : false,
@@ -212,9 +231,32 @@ export default {
                 }
             })
         },
-        editClassDetail(){
-            
-        }
+        saveClassDetail(){
+
+            let class_det = {
+                subject_id : this.class_detail.subject.id,
+                room_id : this.class_detail.room.id,
+                schedule_id : this.class_detail.schedule.id,
+                teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
+            }
+
+            this.$admin.put('/class/update/'+this.class_detail.id,class_det).then(({data}) => {
+                if(data.error){
+                    this.errorNotify(data.error)
+                }
+                else { 
+                    this.successNotify("Updated class_detail")
+                }
+                this.initialize()
+            })
+        },
+        addStudentsToClass(){
+            this.$admin.post(`class/${this.$route.params.id}/add-students`,{student_ids:this.chosen_students.ids}).then(({data}) => {
+                this.successNotify("Successfully added students")
+                this.chosen_students.ids = []
+                this.initialize()
+            })
+        },
     }
 }
 </script>

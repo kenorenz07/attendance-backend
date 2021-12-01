@@ -36,6 +36,9 @@ export default {
         scheduleRule : [
             v => !!v || 'Schedule is required',
         ],
+        studentRule : [
+            v => v.length > 0 || 'Student/s is required',
+        ],
     }),
     methods: {
       

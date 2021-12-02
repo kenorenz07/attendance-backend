@@ -128,6 +128,20 @@
                             <template v-slot:item.display_name="{ item }">
                                 {{item.student.display_name}}
                             </template>
+                            <template v-slot:item.actions="{ item }">
+                                <v-btn
+                                    fab
+                                    class="mx-2"
+                                    dark
+                                    color="error"
+                                    small
+                                    @click="removeStudent(item)"
+                                >
+                                    <v-icon>
+                                        mdi-delete
+                                    </v-icon>
+                                </v-btn>
+                            </template>
                         </v-data-table>
                     </v-col>
                     <v-col cols='8'>
@@ -181,6 +195,7 @@ export default {
             search_key : '',
             headers: [
                 { text: "Name", value: "display_name" },
+                { text: "Actions", value: "actions" },
             ],
             options : {}
         }
@@ -257,6 +272,14 @@ export default {
                 this.initialize()
             })
         },
+        async removeStudent(data) {
+            let confirm = await this.deleteRecord("student and attendances");
+            if (!confirm) return;
+
+            this.$admin.post(`class/remove-student/${this.$route.params.id}`,data).then(({data}) => {
+                this.initialize()
+            })
+        }
     }
 }
 </script>

@@ -73,7 +73,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('class/create',[ClassDetailController::class,'create']);
     Route::put('class/update/{class_detail}',[ClassDetailController::class,'update']);
     Route::post('class/add-student/{class_detail}',[ClassDetailController::class,'addStudentToClass']);
-    Route::delete('class/remove-student/{class_detail}',[ClassDetailController::class,'removeStudentFromClass']);
+    Route::post('class/remove-student/{class_detail}',[ClassDetailController::class,'removeStudentFromClass']);
     Route::delete('class/delete/{class_detail}',[ClassDetailController::class,'delete']);
     
     //CLASS DETAIL STUDENT

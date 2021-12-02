@@ -63,7 +63,7 @@
                             <v-text-field
                               label="Password"
                               required
-                              :rules="form.id ? [] : usernameRule"
+                              :rules="form.id ? [] : passwordRule"
                               v-model="form.password"
                               :type="show_pass ? 'text' : 'password'"
                               :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
@@ -86,7 +86,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$emit('close')"
+            @click="reset(),$emit('close')"
           >
             Close
           </v-btn>
@@ -139,7 +139,7 @@
         validate () {
           if(this.$refs.form.validate()){
             this.$emit('save')
-            this.resetValidation
+            this.reset()
           }
         },
         reset () {

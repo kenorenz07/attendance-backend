@@ -107,7 +107,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$emit('close')"
+            @click="$emit('close'),reset()"
           >
             Close
           </v-btn>
@@ -163,7 +163,7 @@
         validate () {
           if(this.$refs.form.validate()){
             this.$emit('save')
-            this.resetValidation
+            this.reset()
           }
         },
         reset () {

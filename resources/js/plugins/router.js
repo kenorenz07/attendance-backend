@@ -13,6 +13,7 @@ import ClassDetails from '../pages/Admin/ClassDetails.vue';
 // VIEWS 
 import Teacher from '../pages/Admin/views/Teacher.vue';
 import ClassDetail from '../pages/Admin/views/ClassDetail.vue';
+import Student from '../pages/Admin/views/Student.vue';
 
 Vue.use(VueRouter);
 
@@ -62,6 +63,11 @@ const router = new VueRouter({
                     path: '/students',
                     name: 'students',
                     component: Students,
+                },
+                {
+                    path: '/student/:id',
+                    name: 'student',
+                    component: Student,
                 },
             ]
         },

@@ -196,7 +196,7 @@
       :is_from_teacher="true"
       :is_assign="assign_class"
       @close="add_class_dialog = false, initialize()"
-      @save="add_class_dialog = false, addClass()"
+      @save="add_class_dialog = false,assign_class ? assignClass() : addClass()"
     />
   </div>
 </template>
@@ -280,6 +280,24 @@ export default {
           this.successNotify("Updated teacher");
         });
     },
+    assignClass(){
+      let class_detail = {
+        subject_id : this.class_detail.class_detail.subject_id,
+        room_id : this.class_detail.class_detail.room_id,
+        schedule_id : this.class_detail.class_detail.schedule_id,
+        teacher_id : this.teacher.id,
+      }
+      this.$admin.put('/class/update/'+this.class_detail.class_detail.id,class_detail).then(({data}) => {
+        if(data.error){
+            this.errorNotify(data.error)
+        }
+        else { 
+            this.successNotify("Class assigned")
+        }
+        this.initialize()
+      })
+
+    },
     addClass(){
       this.$admin.post('class/create',{
         subject_id : this.class_detail.subject.id,
@@ -301,7 +319,6 @@ export default {
           }
           this.successNotify("Class created")
           this.initialize()
-          this.$refs.form.resetValidation()
         }
       })
     }

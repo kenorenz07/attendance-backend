@@ -3,7 +3,7 @@ export default {
     data: vm => ({
         nameRule : [
             v => !!v || 'Name is required',
-            v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+            v => !!v || 'Name must be less than 10 characters',
         ],
         emailRule: [ 
             v => !!v || 'Email is required', 

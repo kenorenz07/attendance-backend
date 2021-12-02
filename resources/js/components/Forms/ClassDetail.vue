@@ -4,7 +4,7 @@
             <v-dialog v-model="modalState" persistent max-width="600px">
                 <v-card>
                 <v-card-title>
-                    <span class="text-h5">{{form.id ? "Update" : "Create"}} class</span>
+                    <span class="text-h5">{{form.id ? "Update" : is_assign ? "Assign to" :"Create"}} class</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -121,16 +121,15 @@
                                 chips
                                 :rules="classDetailRule"
                             >
-                                <template slot="selection" slot-scope="data">
-                                    <!-- HTML that describe how select should render selected items -->
-                                    Subject : {{data.item.subject.name}}, Room : data.item.room.name {{data.item.room.seats + ' seat/s'}} ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
-                                </template>
+                                <!-- <template slot="selection" slot-scope="data">
+                                    Subject : {{data.item.subject.name}}, Room : {{data.item.room.name}} {{data.item.room.seats + ' seat/s'}} ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
+                                </template> -->
                                 <template slot="item" slot-scope="data">
                                     <template>
                                         <v-list-item-content>
-                                            <v-list-item-title v-html="data.item.id"></v-list-item-title>
+                                            <v-list-item-title > Class # {{data.item.id}}</v-list-item-title>
                                             <v-list-item-subtitle>
-                                               Subject : {{data.item.subject.name}}, Room : data.item.room.name {{data.item.room.seats + ' seat/s'}} ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
+                                               Subject : {{data.item.subject.name}}, Room : {{data.item.room.name}} ({{data.item.room.seats + ' seat/s'}}) ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
                                             </v-list-item-subtitle>
                                         </v-list-item-content>
                                     </template>
@@ -165,7 +164,7 @@
                     <v-btn
                         color="blue darken-1"
                         text
-                        @click="$emit('close')"
+                        @click="reset(),$emit('close')"
                     >
                         Close
                     </v-btn>
@@ -266,8 +265,9 @@
         },
         validate () {
             if(this.$refs.form.validate()){
+                this.initialize()
                 this.$emit('save')
-                    this.reset()
+                this.reset()
             }
         },
         reset () {

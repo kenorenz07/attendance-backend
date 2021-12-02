@@ -70,7 +70,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$emit('close')"
+            @click="reset(),$emit('close')"
           >
             Close
           </v-btn>

@@ -46,7 +46,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        return $student->load('class_details');
+        return $student->load('class_details.class_detail');
     }
 
     public function index(Request $request)
@@ -63,7 +63,7 @@ class StudentController extends Controller
 
     public function classess(Student $student)
     {
-        return $student->class_details()->paginate(6);
+        return $student->class_details()->with('class_detail')->paginate(6);
     }
 
     public function create(Request $request)

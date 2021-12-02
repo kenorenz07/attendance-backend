@@ -159,7 +159,11 @@ class ClassDetailController extends Controller
     
     public function removeStudentFromClass(ClassDetail $class_detail,Request $request)
     {
-        return $class_detail->students()->where('student_id',$request->student_id)->delete();
+        $student_class_detail = $class_detail->students()->where('student_id',$request->student_id)->first();
+        
+        $student_class_detail->attendances()->delete();
+
+        return $student_class_detail->delete();
     }
 
     public function delete(ClassDetail $class_detail)

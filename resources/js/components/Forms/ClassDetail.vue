@@ -16,6 +16,7 @@
                             lazy-validation
                         >
                             <v-select
+                                v-if="!is_assign"
                                 :items="subjects"
                                 v-model="form.subject"
                                 label="Select subject*"
@@ -41,6 +42,7 @@
                                 </template>
                             </v-select>
                             <v-select
+                                v-if="!is_assign"
                                 :items="rooms"
                                 v-model="form.room"
                                 label="Select room*"
@@ -66,6 +68,7 @@
                                 </template>
                             </v-select>
                             <v-select
+                                v-if="!is_assign"
                                 :items="schedules"
                                 v-model="form.schedule"
                                 label="Select schedule*"
@@ -105,8 +108,37 @@
                                 </template>
                             </v-select>
                             <v-select
+                                v-if="is_assign"
+                                :items="availabe_classes"
+                                v-model="form.class_detail"
+                                label="Select class to assign*"
+                                item-text="id"
+                                item-value="id"
+                                max-height="auto"
+                                autocomplete
+                                return-object
+                                required
+                                chips
+                                :rules="classDetailRule"
+                            >
+                                <template slot="selection" slot-scope="data">
+                                    <!-- HTML that describe how select should render selected items -->
+                                    Subject : {{data.item.subject.name}}, Room : data.item.room.name {{data.item.room.seats + ' seat/s'}} ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
+                                </template>
+                                <template slot="item" slot-scope="data">
+                                    <template>
+                                        <v-list-item-content>
+                                            <v-list-item-title v-html="data.item.id"></v-list-item-title>
+                                            <v-list-item-subtitle>
+                                               Subject : {{data.item.subject.name}}, Room : data.item.room.name {{data.item.room.seats + ' seat/s'}} ,Schedule : {{moment(data.item.schedule.time_start, "HH:mm:ss").format("hh:mm a") +" - " +moment(data.item.schedule.time_end, "HH:mm:ss").format("hh:mm a")}}
+                                            </v-list-item-subtitle>
+                                        </v-list-item-content>
+                                    </template>
+                                </template>
+                            </v-select>
+                            <v-select
                                 :items="teachers"
-                                v-if="!is_from_teacher"
+                                v-if="!is_from_teacher && !is_assign"
                                 v-model="form.teacher"
                                 label="Select teacher"
                                 item-text="display_name"
@@ -162,6 +194,10 @@
             type: Boolean,
             default : false,
         },
+        is_assign: {
+            type: Boolean,
+            default : false,
+        },
         form: {
             type: Object,
             required: true,
@@ -182,31 +218,43 @@
       subjects : [],
       rooms : [],
       schedules : [],
+      availabe_classes : []
     }),
     mounted(){
         this.initialize()
     },
+    watch : {
+        is_assign () {
+            this.initialize()
+        }
+    },
     methods : {
         initialize(){
-            // this.$admin.get("class/available").then(({ data }) => {
-            //     this.availabe_classes = data;
-            // });
+            console.log(this.is_assign,'this/is_assign')
+            if(this.is_assign) {
+                this.$admin.get("class/available").then(({ data }) => {
+                    this.availabe_classes = data;
+                });
+            }
+            else {
 
-            this.$admin.get("subject/index").then(({ data }) => {
-                this.subjects = data;
-            });
+                this.$admin.get("subject/index").then(({ data }) => {
+                    this.subjects = data;
+                });
 
-            this.$admin.get("room/index").then(({ data }) => {
-                this.rooms = data;
-            });
+                this.$admin.get("room/index").then(({ data }) => {
+                    this.rooms = data;
+                });
 
-            this.$admin.get("schedule/index").then(({ data }) => {
-                this.schedules = data;
-            });
+                this.$admin.get("schedule/index").then(({ data }) => {
+                    this.schedules = data;
+                });
 
-            this.$admin.get("teacher/index").then(({ data }) => {
-                this.teachers = data;
-            });
+                this.$admin.get("teacher/index").then(({ data }) => {
+                    this.teachers = data;
+                });
+            }
+
         },
         processImage(e){
           var fileReader = new FileReader()

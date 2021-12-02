@@ -49,7 +49,7 @@
               <v-col>
                 <p class="text-h6 text-center">ACTIONS</p>
                 <div class="d-flex justify-content-around">
-                  <v-tooltip bottom color="secondary">
+                  <v-tooltip bottom color="warning">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         class="mx-auto"
@@ -67,7 +67,7 @@
                     <span>Edit profile</span>
                   </v-tooltip>
 
-                  <v-tooltip bottom color="secondary">
+                  <v-tooltip bottom color="primary">
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         class="mx-auto"
@@ -77,12 +77,29 @@
                         v-on="on"
                         color="primary"
                         large
-                        @click="add_class_dialog = true"
+                        @click="assign_class = false,add_class_dialog = true"
                       >
                         <v-icon> mdi-plus </v-icon>
                       </v-btn>
                     </template>
                     <span>Add class</span>
+                  </v-tooltip>
+                  <v-tooltip bottom color="secondary">
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn
+                        class="mx-auto"
+                        fab
+                        dark
+                        v-bind="attrs"
+                        v-on="on"
+                        color="secondary"
+                        large
+                        @click="assign_class = true,add_class_dialog = true"
+                      >
+                        <v-icon> mdi-clipboard-text </v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Assign to a class</span>
                   </v-tooltip>
                 </div>
               </v-col>
@@ -104,7 +121,7 @@
       >
         <v-skeleton-loader
           type="card"
-          height="500"
+          height="300"
         ></v-skeleton-loader>
       </v-col>
     </v-row>
@@ -124,7 +141,7 @@
               dark
               color="success"
               small
-              @click="$router.push('/class/' + teacher.id)"
+              @click="$router.push('/class-detail/' + class_detail.id)"
             >
               <v-icon> mdi-eye </v-icon>
             </v-btn>
@@ -174,9 +191,10 @@
       @save="(addition_edition_dailog = false), saveTeacher()"
     />
     <ClassDetail 
-      :form="class_detail"  
+      :form="class_detail"
       :dialogState="add_class_dialog"     
       :is_from_teacher="true"
+      :is_assign="assign_class"
       @close="add_class_dialog = false, initialize()"
       @save="add_class_dialog = false, addClass()"
     />
@@ -197,11 +215,13 @@ export default {
     class_loading: false,
     addition_edition_dailog: false,
     class_details : [],
+    assign_class : false,
     class_detail : {
       subject : null,
       schedule : null,
       room : null,
-      teacher : null
+      teacher : null,
+      class_detail : null
     },
     pagination:{ 
       page : 1,
@@ -276,7 +296,8 @@ export default {
             subject : null,
             schedule : null,
             room : null,
-            teacher : null
+            teacher : null,
+            class_detail : null
           }
           this.successNotify("Class created")
           this.initialize()

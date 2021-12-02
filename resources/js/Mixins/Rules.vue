@@ -39,6 +39,9 @@ export default {
         studentRule : [
             v => v.length > 0 || 'Student/s is required',
         ],
+        classDetailRule : [
+            v => !!v || 'Class detail is required',
+        ],
     }),
     methods: {
       

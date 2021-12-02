@@ -32,6 +32,12 @@
           </v-toolbar-title>
         </v-toolbar>
       </v-sheet>
+      <v-sheet height="500" v-show="calendar_loading">
+        <v-skeleton-loader
+          type="card,card"
+          height="500"
+        ></v-skeleton-loader>
+      </v-sheet>
       <v-sheet height="500" v-show="!calendar_loading">
         <v-calendar
           ref="calendar"

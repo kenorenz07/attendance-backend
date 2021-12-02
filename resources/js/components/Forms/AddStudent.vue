@@ -29,7 +29,7 @@
                                 :items="students"
                                 v-model="form.ids"
                                 label="Select student/s"
-                                item-text="full_name"
+                                item-text="display_name"
                                 item-value="id"
                                 max-height="auto"
                                 :rules="studentRule"

@@ -50,19 +50,33 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::get('student/all',[StudentController::class,'getAll']);
     Route::get('student/index',[StudentController::class,'index']);
     Route::get('student/classes/{student}',[StudentController::class,'classess']);
+    Route::post('student/{student}/add-class',[StudentController::class,'assignToClass']);
     Route::get('student/{student}',[StudentController::class,'show']);
     Route::post('student/create',[StudentController::class,'create']);
     Route::put('student/update/{student}',[StudentController::class,'update']);
+    Route::post('student/remove-class/{student}',[StudentController::class,'removeClassDetail']);
     Route::delete('student/delete/{student}',[StudentController::class,'delete']);    
 
     // SUBJECTS
     Route::get('subject/index',[SubjectController::class,'index']);
+    Route::get('subject/all',[SubjectController::class,'getAll']);
+    Route::post('subject/create',[SubjectController::class,'create']);
+    Route::put('subject/update/{subject}',[SubjectController::class,'update']);
+    Route::delete('subject/delete/{subject}/',[SubjectController::class,'delete']);
 
     // ROOMS
     Route::get('room/index',[RoomController::class,'index']);
+    Route::get('room/all',[RoomController::class,'getAll']);
+    Route::post('room/create',[RoomController::class,'create']);
+    Route::put('room/update/{room}',[RoomController::class,'update']);
+    Route::delete('room/delete/{room}/',[RoomController::class,'delete']);
 
     // SCHEDULES
     Route::get('schedule/index',[ScheduleController::class,'index']);
+    Route::get('schedule/all',[ScheduleController::class,'getAll']);
+    Route::post('schedule/create',[ScheduleController::class,'create']);
+    Route::put('schedule/update/{schedule}',[ScheduleController::class,'update']);
+    Route::delete('schedule/delete/{schedule}/',[ScheduleController::class,'delete']);
 
     //CLASS DETAILS
     Route::get('class/available',[ClassDetailController::class,'getAvailable']);

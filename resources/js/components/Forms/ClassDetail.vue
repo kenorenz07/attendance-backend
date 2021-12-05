@@ -265,9 +265,9 @@
         },
         validate () {
             if(this.$refs.form.validate()){
-                this.initialize()
                 this.$emit('save')
                 this.reset()
+                this.initialize()
             }
         },
         reset () {

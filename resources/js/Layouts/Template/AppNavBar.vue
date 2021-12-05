@@ -53,6 +53,9 @@ export default {
             { title: 'Teachers', icon: 'mdi-account-multiple', route: '/teachers' },
             { title: 'Classes', icon: 'mdi-book-variant', route: '/class-details' },
             { title: 'Students', icon: 'mdi-account', route: '/students' },
+            { title: 'Rooms', icon: 'mdi-home', route: '/rooms' },
+            { title: 'Schedules', icon: 'mdi-timer-sand-full', route: '/schedules' },
+            { title: 'Subjects', icon: 'mdi-book-open-page-variant', route: '/subjects' },
         ],
     }),
     props : {

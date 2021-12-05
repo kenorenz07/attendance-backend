@@ -121,12 +121,13 @@
                             :single-select="true"
                             item-key="id"
                             show-select
+                            height="628"
                             v-model="selected_student"
                             checkbox-color="secondary"
                             class="elevation-1"
                         >
                             <template v-slot:item.display_name="{ item }">
-                                {{item.student.display_name}}
+                                {{item.student.full_name}}
                             </template>
                             <template v-slot:item.actions="{ item }">
                                 <v-btn
@@ -190,7 +191,7 @@ export default {
             total: 0,
             numberOfPages: 0,
             footerProps :{
-                "items-per-page-options" : [10]
+                "items-per-page-options" : [12]
             },
             search_key : '',
             headers: [
@@ -198,6 +199,7 @@ export default {
                 { text: "Actions", value: "actions" },
             ],
             options : {}
+
         }
     }),
     created () {

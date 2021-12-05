@@ -69,10 +69,6 @@
                               :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
                               @click:append="show_pass = !show_pass"
                             ></v-text-field>
-                            <v-switch
-                              v-model="form.is_super"
-                              label="Super Admin"
-                            ></v-switch>
                         </v-col>
                     </v-row>
                   </v-form>
@@ -116,7 +112,6 @@
                 id:null,
                 name:'',
                 username: '',
-                is_super : 0,
                 password: '',
                 image: '',
             }

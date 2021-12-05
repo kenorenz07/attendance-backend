@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             'username' => 'admin_test',
             'name' => 'John Doe',
             'password' => bcrypt(123123),
-            'is_super' => true
         ]);
 
         $this->call(AdminSeeder::class);
@@ -70,11 +69,12 @@ class DatabaseSeeder extends Seeder
 
         foreach($class_details as $class_detail) {
             
-            for($i = 1; $i < 20; $i++){
+            for($i = 1; $i < 5; $i++){
                 $class_detail->students()->create([
-                    'student_id'=>$i
+                    'student_id'=>rand(1,20)
                 ]);
             }
+        
         }
         
         $this->call(AttendanceSeeder::class);

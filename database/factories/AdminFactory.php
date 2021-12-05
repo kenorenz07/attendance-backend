@@ -26,7 +26,6 @@ class AdminFactory extends Factory
             'name' => $this->faker->name(),
             'username' => $this->faker->unique()->userName(),
             'password' => Hash::make('123123123'),
-            'is_super' => $this->faker->boolean(),
         ];
     }
 }

@@ -5,6 +5,9 @@ export default {
             v => !!v || 'Name is required',
             v => !!v || 'Name must be less than 10 characters',
         ],
+        descriptionRule : [
+            v => !!v || 'Description is required',
+        ],
         emailRule: [ 
             v => !!v || 'Email is required', 
             v => /.+@.+/.test(v) || 'E-mail must be valid' 

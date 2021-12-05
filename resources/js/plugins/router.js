@@ -9,6 +9,9 @@ import Admins from '../pages/Admin/Admins.vue';
 import Teachers from '../pages/Admin/Teachers.vue';
 import Students from '../pages/Admin/Students.vue';
 import ClassDetails from '../pages/Admin/ClassDetails.vue';
+import Rooms from '../pages/Admin/Rooms.vue';
+import Subjects from '../pages/Admin/Subjects.vue';
+import Schedules from '../pages/Admin/Schedules.vue';
 
 // VIEWS 
 import Teacher from '../pages/Admin/views/Teacher.vue';
@@ -68,6 +71,21 @@ const router = new VueRouter({
                     path: '/student/:id',
                     name: 'student',
                     component: Student,
+                },
+                {
+                    path: '/schedules',
+                    name: 'schedules',
+                    component: Schedules,
+                },
+                {
+                    path: '/subjects',
+                    name: 'subjects',
+                    component: Subjects,
+                },
+                {
+                    path: '/rooms',
+                    name: 'rooms',
+                    component: Rooms,
                 },
             ]
         },

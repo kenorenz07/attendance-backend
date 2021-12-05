@@ -12,7 +12,7 @@ class AdminController extends Controller
 {
     public function getAll(Request $request)
     {
-        $admins = Admin::query()->where('id','!=',Auth::id());
+        $admins = Admin::query();
 
         $per_page = $request->query('per_page') ? $request->query('per_page') : 10;
         $sortBy = $request->query('sortBy');
@@ -20,7 +20,7 @@ class AdminController extends Controller
 
         if($request->query('search_key')){
             $admins
-                ->orWhere("username", 'LIKE', "%".$request->query('search_key')."%")
+                ->where("username", 'LIKE', "%".$request->query('search_key')."%")
                 ->orWhere("name", 'LIKE', "%".$request->query('search_key')."%");
         }
         if($sortBy){
@@ -36,7 +36,7 @@ class AdminController extends Controller
             }
        }
 
-        return $admins->paginate($per_page);
+        return $admins->where('id','!=',Auth::id())->paginate($per_page);
     }
 
     public function create(Request $request)
@@ -45,14 +45,12 @@ class AdminController extends Controller
             "name" => 'required',
             "username" => 'required',
             "password" => 'required',
-            "is_super" => 'required',
         ]);
 
         $admin = Admin::create([
             "name" => $request->name,
             "username" => $request->username,
             "password" => bcrypt($request->password),
-            "is_super" => $request->is_super,
         ]);
 
 
@@ -73,7 +71,6 @@ class AdminController extends Controller
             "name" => $request->name,
             "username" => $request->username,
             "password" => $request->password ? bcrypt($request->password): $admin->password,
-            "is_super" => $request->is_super,
         ]);
 
         

@@ -55,9 +55,16 @@ class ClassDetailController extends Controller
         return $class_details->paginate($per_page);
     }
 
-    public function getAvailable()
+    public function getAvailable(Request $request)
     {
-        return ClassDetail::whereNull('teacher_id')->get();
+        if($request->query('student_id')) {
+            return ClassDetail::whereDoesntHave('students', function ($query) use($request){
+                $query->where('student_id', $request->query('student_id'));
+            })->get();
+        } 
+        else {
+            return ClassDetail::whereNull('teacher_id')->get();
+        }
     }
 
     public function getClassStudents(ClassDetail $class_detail,Request $request)

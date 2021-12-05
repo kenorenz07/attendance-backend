@@ -56,14 +56,6 @@
                     </v-avatar>
                 </template>
 
-                <template v-slot:item.is_super="{ item }">
-                    <v-switch
-                        color="secondary"
-                        v-model="item.is_super"
-                        @click="updateAdminSuper(item)"
-                    ></v-switch>
-                </template>
-            
                 <template v-slot:item.actions="{ item }">
                     <v-btn
                         class="mx-2"
@@ -120,7 +112,6 @@
             // { text: "#", align:"start", value: "id" },
             { text: "Name", value: "name" },
             { text: "Username", value: "username" },
-            { text: "Super", value: "is_super" },
             { text: "Actions",  align:"center", value: "actions" },
         ],
         addition_edition_dailog: false,
@@ -143,7 +134,6 @@
                 id:null,
                 name:'',
                 username: '',
-                is_super : 0,
                 password: '',
             }
 
@@ -174,7 +164,6 @@
                 id:null,
                 name:'',
                 username: '',
-                is_super : 0,
                 password: '',
                 image: ''
             }
@@ -186,22 +175,11 @@
                 id:admin.id,
                 name:admin.name,
                 username:admin.username,
-                is_super :admin.is_super,
                 image : admin.image_path,
                 password:'',
             }
 
             this.addition_edition_dailog = true
-        },
-        updateAdminSuper(admin){
-            this.admin = {
-                id:admin.id,
-                name:admin.name,
-                username:admin.username,
-                is_super :admin.is_super,
-                image : admin.image_path,
-            }
-            this.saveAdmin()
         },
         saveAdmin(){
             if(this.admin.id){

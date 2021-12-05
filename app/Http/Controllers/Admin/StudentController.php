@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClassDetailStudent;
 use App\Models\Student;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -61,11 +62,50 @@ class StudentController extends Controller
         return $query->get();
     }
 
-    public function classess(Student $student)
+    public function removeClassDetail(Student $student, Request $request)
     {
-        return $student->class_details()->with('class_detail')->paginate(6);
+        $student_class_detail = $student->class_details()->where("class_detail_id",$request->class_detail_id)->first();
+
+        $student_class_detail->attendances()->delete();
+
+        return $student_class_detail->delete();
+    }
+    public function classess(Student $student,Request $request)
+    {
+        // return $student->class_details()->with('class_detail')->paginate(10);
+
+        $per_page = $request->query('per_page') ? $request->query('per_page') : 5;
+
+        // $students = $class_detail->students()->query();
+        $classes = ClassDetailStudent::query()->with('class_detail');
+
+        $classes->where('student_id',$student->id);
+
+        if($request->query("search_key")){
+            $classes
+                ->whereHas('student', function ($query) use($request){
+                    return $query->where("last_name", 'LIKE', "%".$request->query('search_key')."%")
+                    ->orWhere("first_name", 'LIKE', "%".$request->query('search_key')."%")
+                    ->orWhere("middle_name", 'LIKE', "%".$request->query('search_key')."%")
+                    ->orWhere("email", 'LIKE', "%".$request->query('search_key')."%");
+                })->orWhereHas('room', function ($query) use($request){
+                    return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
+                })
+                ->orWhereHas('subject', function ($query) use($request){
+                    return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
+                });
+        }
+        
+        return $classes->paginate($per_page);
     }
 
+    public function assignToClass(Student $student,Request $request)
+    {
+        return $student->class_details()->create([
+            "class_detail_id" => $request->class_detail_id
+        ]);
+    }
+    
     public function create(Request $request)
     {
         $request->validate([

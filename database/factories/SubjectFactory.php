@@ -22,7 +22,7 @@ class SubjectFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->streetSuffix(),
+            'name' => $this->faker->unique()->streetSuffix(),
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
         ];
     }

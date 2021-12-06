@@ -61,7 +61,7 @@
                                         <div class="text-right text-subtitle-1">
                                             Classes
                                         </div>
-                                        <p class="ttext-right text-h4">
+                                        <p class="text-right text-h4">
                                             {{statistics_totals.class_details}}
                                         </p>
                                     </div>
@@ -79,7 +79,7 @@
                                         </v-icon>
                                     </div>
                                     <div class="mt-3">
-                                        <div class="text-right text-subtitle-1">
+                                        <div class="text-right text-subtitle-2">
                                             Attendances
                                         </div>
                                         <p class="text-right text-h4">

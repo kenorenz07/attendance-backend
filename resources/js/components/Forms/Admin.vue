@@ -135,6 +135,7 @@
           if(this.$refs.form.validate()){
             this.$emit('save')
             this.reset()
+            this.resetValidation()
           }
         },
         reset () {

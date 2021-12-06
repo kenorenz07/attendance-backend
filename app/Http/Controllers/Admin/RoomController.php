@@ -66,7 +66,7 @@ class RoomController extends Controller
             "seats" => "required",
         ]);
 
-        $room->create([
+        $room->update([
             "name" => $request->name,
             "node_key" => $request->node_key,
             "seats" => $request->seats,

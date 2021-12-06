@@ -36,7 +36,7 @@
                 :page="page"
                 :pageCount="numberOfPages"
                 :headers="headers"
-                :items="admins"
+                :items="subjects"
                 :options.sync="options"
                 :server-items-length="total"
                 :items-per-page="options.itemsPerPage"
@@ -44,18 +44,6 @@
                 :loading="loading"
                 class="elevation-4"
             >
-                <template v-slot:item.image="{ item }">
-                    <v-avatar class="my-2">
-                        <img v-if="item.image_path"
-                            :src="item.image_path"
-                            :alt="item.name"
-                        >
-                        <v-icon v-else color="primary" large dark>
-                            mdi-account-supervisor-circle
-                        </v-icon>
-                    </v-avatar>
-                </template>
-
                 <template v-slot:item.actions="{ item }">
                     <v-btn
                         class="mx-2"
@@ -99,7 +87,7 @@
         page: 0,
         total: 0,
         numberOfPages: 0,
-        admins: [],
+        subjects: [],
         loading: true,
         options: {
           itemsPerPage: 10
@@ -150,7 +138,7 @@
             this.$admin.get('/subject/all', { params }).then(({data}) => {
                     //Then injecting the result to datatable parameters.
                     this.loading = false;
-                    this.admins = data.data;
+                    this.subjects = data.data;
                     this.page = data.page;
                     this.total = data.total;
                     this.numberOfPages = data.last_page;
@@ -199,7 +187,7 @@
                     return
                 }
                 this.initialize() 
-                this.successNotify("Delete subject")
+                this.successNotify("Deleted subject")
             })
         }
     },  

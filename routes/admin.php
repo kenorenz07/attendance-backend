@@ -30,6 +30,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     //Authentication Controller
     Route::get('/details',[AuthenticationController::class, 'details']);
     Route::post('/logout',[AuthenticationController::class, 'logout']);
+    Route::get('/statistics/{year}',[AuthenticationController::class, 'statistics']);
 
     // ADMIN
     Route::get('admin/all',[AdminController::class, 'getAll']);

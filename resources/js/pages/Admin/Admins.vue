@@ -130,12 +130,12 @@
     methods: {
         //Reading data from API method. 
         initialize() {
-            this.admin = {
-                id:null,
-                name:'',
-                username: '',
-                password: '',
-            }
+            // this.admin = {
+            //     id:null,
+            //     name:'',
+            //     username: '',
+            //     password: '',
+            // }
 
             this.loading = true;
 
@@ -201,7 +201,7 @@
 
             this.$admin.delete('/admin/delete/'+ admin.id).then(({data}) => {
                 this.initialize() 
-                this.successNotify("Delete admin")
+                this.successNotify("Deleted admin")
             })
         }
     },  

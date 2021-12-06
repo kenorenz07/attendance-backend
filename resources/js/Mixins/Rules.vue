@@ -8,6 +8,13 @@ export default {
         descriptionRule : [
             v => !!v || 'Description is required',
         ],
+        nodeKeyRule : [
+            v => !!v || 'Node key is required',
+        ],
+        seatsRule : [
+            v => v > 1 || 'Seats is must be greater than 0',
+            v => !!v || 'Seats is required',
+        ],
         emailRule: [ 
             v => !!v || 'Email is required', 
             v => /.+@.+/.test(v) || 'E-mail must be valid' 
@@ -38,6 +45,9 @@ export default {
         ],
         scheduleRule : [
             v => !!v || 'Schedule is required',
+        ],
+        dayRule : [
+            v => !!v || 'Day is required',
         ],
         studentRule : [
             v => v.length > 0 || 'Student/s is required',

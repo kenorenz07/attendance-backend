@@ -97,6 +97,12 @@ class NodeMcuController extends Controller
                     "error" => "not found"
                 ];
             }
+
+            return [
+                "room_id" => $room->id,
+                "schedule_id" => $schedule->id,
+                "teacher_id" => $teacher->id
+            ];
             
             $class_detail = ClassDetail::where([
                 "room_id" => $room->id,

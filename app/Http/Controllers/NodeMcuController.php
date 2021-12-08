@@ -98,12 +98,21 @@ class NodeMcuController extends Controller
                 ];
             }
 
-            return [
-                "room_id" => $room->id,
-                "schedule_id" => $schedule->id,
-                "teacher_id" => $teacher->id
-            ];
+            // return [
+            //     "room_id" => $room->id,
+            //     "schedule_id" => $schedule->id,
+            //     "teacher_id" => $teacher->id
+            // ];
+
+            $class_detail = ClassDetail::whereHas("room",function ($query) use($node_key){
+                return $query->where("node_key",$node_key);
+            })->whereHas('schedule', function ($query) use($weekMap){
+                return $query->whereTime('time_start', '<=', date('H:i:s'))->whereTime('time_end', '>=', date('H:i:s'))->where('day',$weekMap[Carbon::now()->dayOfWeek]);
+            })->whereHas('teacher', function ($query) use($request){
+                return $query->where('rfid_number',$request->rfid_number);
+            })->first();
             
+            return ["kens" =>$class_detail];
             $class_detail = ClassDetail::where([
                 "room_id" => $room->id,
                 "schedule_id" => $schedule->id,

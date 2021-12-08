@@ -112,13 +112,6 @@ class NodeMcuController extends Controller
                 return $query->where('rfid_number',$request->rfid_number);
             })->first();
             
-            return ["kens" =>$class_detail];
-            $class_detail = ClassDetail::where([
-                "room_id" => $room->id,
-                "schedule_id" => $schedule->id,
-                "teacher_id" => $teacher->id
-            ])->first();
-
             return [
                 "authorized" => true,
                 "class_detail_id" => $class_detail->id,

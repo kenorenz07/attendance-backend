@@ -22,8 +22,8 @@ class ScheduleFactory extends Factory
     public function definition()
     {
         return [
-            'time_start' => $this->faker->time($format = 'H:i:s'),
-            'time_end' => $this->faker->time($format = 'H:i:s'),
+            'time_start' => $this->faker->time($format = 'H:i'),
+            'time_end' => $this->faker->time($format = 'H:i'),
             'day' => $this->faker->dayOfWeek(),
         ];
     }

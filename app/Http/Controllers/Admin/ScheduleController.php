@@ -45,8 +45,8 @@ class ScheduleController extends Controller
         ]);
 
         $schedule = Schedule::create([
-            "time_start" => $request->time_start,
-            "time_end" => $request->time_end,
+            "time_start" => $request->time_start.":00",
+            "time_end" => $request->time_end.":00",
             "day" => $request->day,
         ]);
 

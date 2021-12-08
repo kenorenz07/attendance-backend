@@ -22,8 +22,8 @@ class RoomFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->numerify('CET ###'),
-            'node_key' => $this->faker->password(),
+            'name' => $this->faker->unique()->numerify('CET ###'),
+            'node_key' => $this->faker->unique()->numerify('cet_####'),
             'seats' => $this->faker->randomDigit()
         ];
     }

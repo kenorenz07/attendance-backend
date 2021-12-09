@@ -111,6 +111,12 @@ class NodeMcuController extends Controller
             })->whereHas('teacher', function ($query) use($request){
                 return $query->where('rfid_number',$request->rfid_number);
             })->first();
+
+            if(empty($class_detail)){
+                return [    
+                    "error" => "not found"
+                ];
+            }
             
             return [
                 "authorized" => true,

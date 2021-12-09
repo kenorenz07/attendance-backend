@@ -154,7 +154,7 @@
         <ClassDetail 
             :form="class_detail"  
             :dialogState="addition_edition_dailog"     
-            @close="addition_edition_dailog = false"
+            @close="initialize(),addition_edition_dailog = false"
             @save="addition_edition_dailog = false, saveClassDetail()"
         />
         <AddStudent 

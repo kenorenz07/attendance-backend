@@ -26,6 +26,10 @@ const router = new VueRouter({
     routes: [
         {
             path: '',
+            redirect: '/dashboard'
+        },
+        {
+            path: '',
             name: 'main',
             component: Main,
             meta: {

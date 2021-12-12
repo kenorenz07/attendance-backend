@@ -22,9 +22,9 @@ class ClassDetailController extends Controller
             });
         }
 
-        if($request->query('subject')) {
+        if($request->query('subject_key')) {
             $class_details->whereHas('subject', function ($query) use($request){
-                return $query->where('name', $request->query('subject'));
+                return $query->where('name', $request->query('subject_key'));
             });
         }
        

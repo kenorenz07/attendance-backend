@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClassDetail;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class ClassDetailController extends Controller
@@ -22,7 +23,7 @@ class ClassDetailController extends Controller
         }
 
         if($request->query('subject')) {
-            return "jsjsjs";
+            return Subject::where('name', $request->query('subject'));
             $class_details->whereHas('subject', function ($query) use($request){
                 return $query->where('name', $request->query('subject'));
             });

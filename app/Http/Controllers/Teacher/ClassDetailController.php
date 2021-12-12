@@ -23,7 +23,9 @@ class ClassDetailController extends Controller
         }
 
         if($request->query('subject')) {
-            return Subject::where('name', $request->query('subject'))->get();
+            return $class_details->whereHas('subject', function ($query) use($request){
+                return $query->where('name', $request->query('subject'));
+            })->first();
             $class_details->whereHas('subject', function ($query) use($request){
                 return $query->where('name', $request->query('subject'));
             });

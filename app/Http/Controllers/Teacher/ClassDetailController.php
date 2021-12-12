@@ -15,13 +15,14 @@ class ClassDetailController extends Controller
 
         $class_details = $teacher->class_details();
 
-        // if($request->query('day')) {
-        //     $class_details->whereHas('schedule', function ($query) use($request){
-        //         return $query->where('day', $request->query('day'));
-        //     });
-        // }
+        if($request->query('day')) {
+            $class_details->whereHas('schedule', function ($query) use($request){
+                return $query->where('day', $request->query('day'));
+            });
+        }
 
         if($request->query('subject')) {
+            return "jsjsjs";
             $class_details->whereHas('subject', function ($query) use($request){
                 return $query->where('name', $request->query('subject'));
             });

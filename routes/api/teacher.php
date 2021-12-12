@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Teacher\AuthenticationController;
+use App\Http\Controllers\Teacher\ClassDetailController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('/details',[AuthenticationController::class, 'details']);
 
     Route::post('/logout',[AuthenticationController::class, 'logout']);
+
+    // CLASS DETAILS 
+    Route::get('class-details',[ClassDetailController::class,'getAll']);
+    Route::get('class-detail/{class_detail}',[ClassDetailController::class,'show']);
 });

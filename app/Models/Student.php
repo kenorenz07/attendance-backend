@@ -39,7 +39,7 @@ class Student extends Authenticatable
     {
         $fullname = '';
         if ($this->first_name) $fullname = ucfirst($this->first_name);
-        if ($this->middle_name) $fullname = ' '. ucfirst($this->middle_name);
+        if ($this->middle_name) $fullname .= ' '. ucfirst($this->middle_name);
         if ($this->last_name) $fullname .= ' '.ucfirst($this->last_name);
         return $fullname;
     }

@@ -17,6 +17,7 @@ import Schedules from '../pages/Admin/Schedules.vue';
 import Teacher from '../pages/Admin/views/Teacher.vue';
 import ClassDetail from '../pages/Admin/views/ClassDetail.vue';
 import Student from '../pages/Admin/views/Student.vue';
+import Room from '../pages/Admin/views/Room.vue';
 
 Vue.use(VueRouter);
 
@@ -90,6 +91,11 @@ const router = new VueRouter({
                     path: '/rooms',
                     name: 'rooms',
                     component: Rooms,
+                },
+                {
+                    path: '/room/:id',
+                    name: 'room',
+                    component: Room,
                 },
             ]
         },

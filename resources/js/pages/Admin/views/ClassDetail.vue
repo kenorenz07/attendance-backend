@@ -73,7 +73,7 @@
                                                 <v-icon> mdi-circle-edit-outline </v-icon>
                                             </v-btn>
                                         </template>
-                                        <span>Edit profile</span>
+                                        <span>Edit Class</span>
                                     </v-tooltip>
 
                                     <v-tooltip bottom color="secondary">

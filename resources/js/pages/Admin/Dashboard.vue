@@ -4,10 +4,10 @@
             class="mx-auto px-5 py-5"
             outlined
         >
-            <v-card-title>
+            <v-card-text>
                 <v-row>
-                    <v-col>
-                        <v-card elevation="3" >
+                    <v-col cols=3>
+                        <v-card elevation="3" @click="goTo('/teachers')">
                             <v-card-text>
                                 <div class="d-flex justify-space-between mx-2">
                                     <div >
@@ -27,8 +27,8 @@
                             </v-card-text>
                         </v-card>
                     </v-col>
-                    <v-col>
-                        <v-card elevation="3" >
+                    <v-col cols=3>
+                        <v-card elevation="3" @click="goTo('/students')">
                             <v-card-text>
                                 <div class="d-flex justify-space-between mx-2">
                                     <div >
@@ -48,8 +48,8 @@
                             </v-card-text>
                         </v-card>
                     </v-col>
-                    <v-col>
-                        <v-card elevation="3" >
+                    <v-col cols=3>
+                        <v-card elevation="3" @click="goTo('/class-details')">
                             <v-card-text>
                                 <div class="d-flex justify-space-between mx-2">
                                     <div >
@@ -69,7 +69,7 @@
                             </v-card-text>
                         </v-card>
                     </v-col>
-                    <v-col>
+                    <v-col cols=3>
                         <v-card elevation="3" >
                             <v-card-text>
                                 <div class="d-flex justify-space-between mx-2">
@@ -92,7 +92,7 @@
                     </v-col>
                 </v-row>
                 <v-row>
-                    <v-col>
+                    <v-col cols=12>
                         <v-card elevation="5">
                             <v-card-text class="statistic-card">
                                 <div class="chart-select">
@@ -116,14 +116,14 @@
                         </v-card>
                     </v-col>
                 </v-row>    
-            </v-card-title>
+            </v-card-text>
         </v-card>
     </div>
 </template>
 
 <script>
 export default {
-    data: (vm) => ({
+    data: () => ({
         year : new Date().getFullYear() ,
         statistics: [
             {
@@ -255,6 +255,9 @@ export default {
                 ]
             })
         },
+        goTo(path) {
+            this.$router.push(path)
+        }
     },
    
 };
@@ -265,7 +268,6 @@ export default {
     }
     .chart-select{
         display: flex;
-        justify-content: end;
         position: absolute;
         right: 10px;
         top: 10px;

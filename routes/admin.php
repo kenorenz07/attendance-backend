@@ -68,6 +68,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     // ROOMS
     Route::get('room/index',[RoomController::class,'index']);
     Route::get('room/all',[RoomController::class,'getAll']);
+    Route::get('room/show/{room}',[RoomController::class,'show']);
     Route::post('room/create',[RoomController::class,'create']);
     Route::put('room/update/{room}',[RoomController::class,'update']);
     Route::delete('room/delete/{room}/',[RoomController::class,'delete']);

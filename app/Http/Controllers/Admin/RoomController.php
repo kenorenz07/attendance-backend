@@ -41,6 +41,11 @@ class RoomController extends Controller
         return $rooms->paginate($per_page);
     }
 
+    public function show(Room $room) 
+    {
+        return $room->load('class_details');
+    }
+
     public function create(Request $request)
     {
         $request->validate([

@@ -61,6 +61,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     // SUBJECTS
     Route::get('subject/index',[SubjectController::class,'index']);
     Route::get('subject/all',[SubjectController::class,'getAll']);
+    Route::get('subject/show/{subject}',[SubjectController::class,'show']);
+    Route::get('subject/classes/{subject}',[SubjectController::class,'classess']);
     Route::post('subject/create',[SubjectController::class,'create']);
     Route::put('subject/update/{subject}',[SubjectController::class,'update']);
     Route::delete('subject/delete/{subject}/',[SubjectController::class,'delete']);
@@ -69,6 +71,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::get('room/index',[RoomController::class,'index']);
     Route::get('room/all',[RoomController::class,'getAll']);
     Route::get('room/show/{room}',[RoomController::class,'show']);
+    Route::get('room/classes/{room}',[RoomController::class,'classess']);
     Route::post('room/create',[RoomController::class,'create']);
     Route::put('room/update/{room}',[RoomController::class,'update']);
     Route::delete('room/delete/{room}/',[RoomController::class,'delete']);
@@ -76,6 +79,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     // SCHEDULES
     Route::get('schedule/index',[ScheduleController::class,'index']);
     Route::get('schedule/all',[ScheduleController::class,'getAll']);
+    Route::get('schedule/show/{schedule}',[ScheduleController::class,'show']);
+    Route::get('schedule/classes/{schedule}',[ScheduleController::class,'classess']);
     Route::post('schedule/create',[ScheduleController::class,'create']);
     Route::put('schedule/update/{schedule}',[ScheduleController::class,'update']);
     Route::delete('schedule/delete/{schedule}/',[ScheduleController::class,'delete']);

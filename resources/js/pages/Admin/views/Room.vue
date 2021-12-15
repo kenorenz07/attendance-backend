@@ -54,12 +54,19 @@
                 </v-col>
             </v-row>
         </v-card-title>
-        </v-card>
+        </v-card>    
+        <ClassDetailList 
+            :pagination="pagination"
+            :class_loading="class_loading"
+            :class_details="class_details"
+            display_to="room"
+        />
         <RoomForm :form="room" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveRoom()" />
     </div>
 </template>
 <script>
 import RoomForm from '../../../components/Forms/Room.vue'
+import ClassDetailList from "../../../components/ClassDetailList.vue";
 export default {
     data: () => ({
         room : {},
@@ -68,11 +75,13 @@ export default {
             page : 1,
             number_of_pages : 1
         },
-    class_details : [],
+        class_loading : false,
+        class_details : [],
 
     }),
     components : {
-        RoomForm
+        RoomForm,
+        ClassDetailList
     },
     mounted () {
         this.initialize()
@@ -82,6 +91,10 @@ export default {
             this.$admin.get('/room/show/'+this.$route.params.id).then(({data}) => {
                 this.room = data
             })
+
+            let params = {
+                page: this.pagination.page
+            }
 
             this.$admin.get("room/classes/" + this.$route.params.id,{ params }).then(({data}) => {
                 this.class_details = data.data

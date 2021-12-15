@@ -55,6 +55,18 @@
                         class="mx-2"
                         fab
                         dark
+                        color="success"
+                        small
+                        @click="$router.push('schedule/'+item.id)"
+                    >
+                        <v-icon >
+                            mdi-eye
+                        </v-icon>
+                    </v-btn>
+                    <v-btn
+                        class="mx-2"
+                        fab
+                        dark
                         color="warning"
                         small
                         @click="editSchedule(item)"

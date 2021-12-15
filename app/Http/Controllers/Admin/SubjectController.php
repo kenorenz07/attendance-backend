@@ -42,6 +42,16 @@ class SubjectController extends Controller
 
     }
 
+    public function show(Subject $subject) 
+    {
+        return $subject->load('class_details');
+    }
+
+    public function classess(Subject $subject)
+    {
+        return $subject->class_details()->paginate(6);
+    }
+
     public function create(Request $request)
     {
         $request->validate([

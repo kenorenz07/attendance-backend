@@ -36,6 +36,16 @@ class ScheduleController extends Controller
 
     }
 
+    public function show(Schedule $schedule) 
+    {
+        return $schedule->load('class_details');
+    }
+
+    public function classess(Schedule $schedule)
+    {
+        return $schedule->class_details()->paginate(6);
+    }
+
     public function create(Request $request)
     {
         $request->validate([

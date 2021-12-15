@@ -39,31 +39,42 @@
             </v-btn>
           </v-card-title>
           <v-card-text class="text-white">
-            <p class="text-h6 mb-0">Subject :</p>
-            <span class="text-subtitle-1 pl-3">
-              {{ class_detail.subject.name }} - 
-              <span class="text-subtitle-2">
-                {{ class_detail.subject.description }}
+            <div v-if="display_to != 'teacher'">
+              <p class="text-h6 mb-0">Teacher :</p>
+              <span class="text-subtitle-1 pl-3">
+                {{class_detail.teacher.full_name}}
               </span>
-            </span>
-             
-            <p class="text-h6 mb-0">Room :</p>
-            <span class="text-subtitle-1 pl-3"
-              >{{ class_detail.room.name }}, Seats available :
-              {{ class_detail.room.seats ? class_detail.room.seats : 0 }} seat/s</span
-            >
-            <p class="text-h6 mb-0">Schedule :</p>
-            <p class="text-subtitle-1 pl-3">
-              {{class_detail.schedule.day}} {{
-                moment(class_detail.schedule.time_start, "HH:mm:ss").format(
-                  "hh:mm a"
-                ) +
-                " - " +
-                moment(class_detail.schedule.time_end, "HH:mm:ss").format(
-                  "hh:mm a"
-                )
-              }}
-            </p>
+            </div>
+            <div v-if="display_to != 'subject'">
+              <p class="text-h6 mb-0">Subject :</p>
+              <span class="text-subtitle-1 pl-3">
+                {{ class_detail.subject.name }} - 
+                <span class="text-subtitle-2">
+                  {{ class_detail.subject.description }}
+                </span>
+              </span>
+            </div>
+            <div v-if="display_to != 'room'">
+              <p class="text-h6 mb-0">Room :</p>
+              <span class="text-subtitle-1 pl-3"
+                >{{ class_detail.room.name }}, Seats available :
+                {{ class_detail.room.seats ? class_detail.room.seats : 0 }} seat/s</span
+              >
+            </div>
+            <div v-if="display_to != 'schedule'">
+              <p class="text-h6 mb-0">Schedule :</p>
+              <p class="text-subtitle-1 pl-3">
+                {{class_detail.schedule.day}} {{
+                  moment(class_detail.schedule.time_start, "HH:mm:ss").format(
+                    "hh:mm a"
+                  ) +
+                  " - " +
+                  moment(class_detail.schedule.time_end, "HH:mm:ss").format(
+                    "hh:mm a"
+                  )
+                }}
+              </p>
+            </div>
           </v-card-text>
         </v-card>
       </v-col>
@@ -78,3 +89,31 @@
     </div>
   </div>
 </template>
+<script>
+  export default {
+    props : {
+      pagination : {
+        required : true,
+        type : Object,
+        default : {
+          page : 1,
+          number_of_pages : 1
+        }
+      },
+      class_loading: {
+        required : true,
+        type : Boolean,
+        default : false
+      },
+      class_details : {
+        required : true,
+        type : Array,
+        default : []
+      },
+      display_to : {
+        required : true,
+        type : String
+      }
+    }
+  }
+</script>

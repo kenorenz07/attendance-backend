@@ -16,7 +16,7 @@ class ClassDetailController extends Controller
 
         $class_details = ClassDetail::query()->where('teacher_id', $teacher->id);
 
-        if($request->query('day')) {
+        if($request->query('day')) { 
             $class_details->whereHas('schedule', function ($query) use($request){
                 return $query->where('day', $request->query('day'));
             });
@@ -34,5 +34,20 @@ class ClassDetailController extends Controller
     public function show(Request $request,ClassDetail $class_detail)
     {
         return $class_detail;
+    }
+
+    public function getAttendances(ClassDetail $class_detail,Request $request) 
+    {
+        // $class_students = $class_detail->students;
+        // $class_attendance = [];
+
+        // foreach($class_students as $class_student){
+        //     $
+        // }
+
+        return $class_detail->students()->whereHas("attendances", function ($query) use($request) {
+            return $query->whereDate('date_of_attendance',$request->query('date_filter'));
+        });
+
     }
 }

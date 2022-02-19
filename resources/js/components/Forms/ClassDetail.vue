@@ -154,6 +154,48 @@
                                     </template>
                                 </template>
                             </v-select>
+                            <v-menu
+                                ref="menu"
+                                v-model="date_menu"
+                                :close-on-content-click="false"
+                                :nudge-right="40"
+                                :return-value.sync="form.start_end_date"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="auto"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+
+                                    v-model="dateRangeText"
+                                    label="Select start to end date"
+                                    prepend-icon="mdi-calendar"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
+                                </template>
+                                <v-date-picker
+                                    v-model="form.start_end_date"
+                                    range
+                                >
+                                    <v-spacer></v-spacer>
+                                        <v-btn
+                                            text
+                                            color="primary"
+                                            @click="date_menu = false"
+                                        >
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn
+                                            text
+                                            color="primary"
+                                            @click="$refs.menu.save(form.start_end_date)"
+                                        >
+                                            OK
+                                        </v-btn>
+                                </v-date-picker>
+                            </v-menu>
                         </v-form>
                         </v-col>
                     </v-row>
@@ -206,6 +248,7 @@
                 schedule : null,
                 room : null,
                 teacher : null,
+                start_end_date : [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
             }
         }
     },
@@ -213,11 +256,13 @@
       valid: true,
       show_pass : false,
       dialog: false,
+      date_menu : false,
       teachers : [],
       subjects : [],
       rooms : [],
       schedules : [],
-      availabe_classes : []
+      availabe_classes : [],
+      dateRangeText:''
     }),
     mounted(){
         this.initialize()
@@ -225,7 +270,16 @@
     watch : {
         is_assign () {
             this.initialize()
-        }
+        },
+        'form.start_end_date' : {
+            handler(val) {
+                if(val.length > 1){
+                    this.dateRangeText = val.join(' ~ ')
+                }
+            }
+        } 
+    },
+    computed: {
     },
     methods : {
         initialize(){

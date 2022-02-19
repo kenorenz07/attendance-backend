@@ -14,7 +14,9 @@ class ClassDetail extends Model
         "room_id",
         "subject_id",
         "schedule_id",
-        "teacher_id"
+        "teacher_id",
+        "start_date",
+        "end_date",
     ];
 
     protected $with = ["room","subject","schedule","teacher","students"] ;

@@ -192,7 +192,8 @@
                 subject : null,
                 schedule : null,
                 room : null,
-                teacher : null
+                teacher : null,
+                start_end_date : [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
             }
 
             this.addition_edition_dailog = true
@@ -203,7 +204,8 @@
                 subject : class_detail.subject,
                 schedule : class_detail.schedule,
                 room : class_detail.room,
-                teacher : class_detail.teacher
+                teacher : class_detail.teacher,
+                start_end_date : [class_detail.start_date,class_detail.end_date],
             }
 
             this.addition_edition_dailog = true
@@ -215,6 +217,8 @@
                 room_id : this.class_detail.room.id,
                 schedule_id : this.class_detail.schedule.id,
                 teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
+                start_date : this.class_detail.start_end_date[0],
+                end_date : this.class_detail.start_end_date[1]
             }
 
             if(this.class_detail.id){

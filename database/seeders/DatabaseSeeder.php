@@ -60,7 +60,9 @@ class DatabaseSeeder extends Seeder
                     "room_id" => $room_id,
                     "subject_id" => $subject_id,
                     "schedule_id" => $schedule_id,
-                    "teacher_id" => $teacher_id
+                    "teacher_id" => $teacher_id,
+                    "start_date" => Carbon::now()->startOfYear(),
+                    "end_date" => Carbon::now()->endOfYear()
                 ]);
             }
         }

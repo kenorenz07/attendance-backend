@@ -217,6 +217,7 @@ export default {
 
             this.$admin.get("class/"+this.$route.params.id).then(({data}) => {
                 this.class_detail = data
+                this.class_detail.start_end_date = [data.start_date,data.end_date]
             })
             this.studentsInitialize()
         },
@@ -255,6 +256,8 @@ export default {
                 room_id : this.class_detail.room.id,
                 schedule_id : this.class_detail.schedule.id,
                 teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
+                start_date : this.class_detail.start_end_date[0],
+                end_date : this.class_detail.start_end_date[1]
             }
 
             this.$admin.put('/class/update/'+this.class_detail.id,class_det).then(({data}) => {

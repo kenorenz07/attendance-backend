@@ -19,6 +19,8 @@ class CreateClassDetailsTable extends Migration
             $table->foreignId('subject_id')->constrained('subjects');
             $table->foreignId('schedule_id')->constrained('schedules');
             $table->foreignId('teacher_id')->nullable()->constrained('teachers');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

@@ -10,6 +10,7 @@ use App\Models\Schedule;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ClassDetailController extends Controller
@@ -122,7 +123,9 @@ class ClassDetailController extends Controller
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
-            "teacher_id" => $request->teacher_id ? $request->teacher_id : null
+            "teacher_id" => $request->teacher_id ? $request->teacher_id : null,
+            "start_date" => Carbon::parse($request->start_date),
+            "end_date" => Carbon::parse($request->end_date),
         ]);
 
         return $class_detail;
@@ -153,7 +156,9 @@ class ClassDetailController extends Controller
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
-            "teacher_id" => $request->teacher_id ? $request->teacher_id : null
+            "teacher_id" => $request->teacher_id ? $request->teacher_id : null,
+            "start_date" => Carbon::parse($request->start_date),
+            "end_date" => Carbon::parse($request->end_date),
         ]);
 
         return $class_detail;

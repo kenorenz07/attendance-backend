@@ -28,6 +28,8 @@
                                 <div v-else>
                                     Not assigned
                                 </div>
+                                <div >Start date : {{class_detail.start_date}}</div>
+                                <div >End date : {{class_detail.end_date}}</div>
                             </v-col>
                             <v-divider color="gray" vertical></v-divider>
                             <v-col>

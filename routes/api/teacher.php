@@ -31,6 +31,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('class-details',[ClassDetailController::class,'getAll']);
     Route::get('class-detail/{class_detail}',[ClassDetailController::class,'show']);
     Route::get('class-detail/{class_detail}/get-attendances',[ClassDetailController::class,'getAttendances']);
+    Route::get('class-detail/{class_detail}/get-days-filter',[ClassDetailController::class,'getDatesForFilter']);
+    
     // SUBJECT 
     Route::get('subjects',[SubjectController::class,'getAll']);
     // STUDENT

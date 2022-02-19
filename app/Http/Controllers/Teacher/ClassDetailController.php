@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\ClassDetail;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ClassDetailController extends Controller
@@ -36,6 +37,46 @@ class ClassDetailController extends Controller
         return $class_detail;
     }
 
+    public function parseDay($day)
+    {
+        switch($day) {
+            case 'MONDAY' :
+                return 1;
+                break;
+            case 'TUESDAY' :
+                return 2;
+                break;
+            case 'WEDNESDAY' :
+                return 3;
+                break;
+            case 'THURSDAY' :
+                return 4;
+                break;
+            case 'FRIDAY' :
+                return 5;
+                break;
+            case 'SATURDAY' :
+                return 6;
+                break;
+            case 'SUNDAY' :
+                return 0;
+                break;
+            
+        }
+    }
+
+    public function getDatesForFilter(ClassDetail $class_detail)
+    {
+        $days = [];
+        $startDate = Carbon::parse($class_detail->start_date)->next($this->parseDay($class_detail->schedule->day)); // Get the first friday.
+        $endDate = Carbon::parse($class_detail->end_date);
+        
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $days[] = $date->format('m/d/Y');
+        }
+
+        return $days;
+    }
     public function getAttendances(ClassDetail $class_detail,Request $request) 
     {
         // $class_students = $class_detail->students;
@@ -46,7 +87,7 @@ class ClassDetailController extends Controller
         // }
 
         return $class_detail->students()->whereHas("attendances", function ($query) use($request) {
-            return $query->whereDate('date_of_attendance',$request->query('date_filter'));
+            return $query->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')));
         });
 
     }

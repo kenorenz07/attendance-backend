@@ -7,6 +7,7 @@ use App\Models\ClassDetail;
 use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class ClassDetailController extends Controller
 {
@@ -83,18 +84,15 @@ class ClassDetailController extends Controller
         $class_attendance = [];
 
         foreach($class_students as $class_student){
-            $attendance = $class_student->attendances()->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')))->first();
+            $attendance = $class_student->attendances()->whereDate('date_of_attendance',Carbon::createFromFormat('m/d/Y',$request->query('date_filter')))->first();
 
             if($attendance){
-                $class_student->put('attendance', $attendance);
+                $class_student = Arr::add($class_student,'attendance', $attendance);
                 $class_attendance[] = $class_student;
             }
         }
 
         return $class_attendance;
-        // return $class_detail->students()->whereHas("attendances", function ($query) use($request) {
-        //     return $query->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')));
-        // });
 
     }
 }

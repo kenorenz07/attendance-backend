@@ -80,7 +80,7 @@ class ClassDetailController extends Controller
     }
     public function getAttendances(ClassDetail $class_detail,Request $request) 
     {
-        $class_students = $class_detail->students;
+        $class_students = $class_detail->students()->with('student')->get();
         $class_attendance = [];
 
         foreach($class_students as $class_student){

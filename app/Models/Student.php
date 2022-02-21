@@ -28,7 +28,7 @@ class Student extends Authenticatable
         "password",
     ];
 
-    protected $appends = ['image_path',"full_name","display_name"];
+    protected $appends = ['image_path',"full_name","display_name","display_name_mobile"];
 
     public function image()
     {
@@ -42,6 +42,15 @@ class Student extends Authenticatable
         if ($this->middle_name) $fullname .= ' '. ucfirst($this->middle_name);
         if ($this->last_name) $fullname .= ' '.ucfirst($this->last_name);
         return $fullname;
+    }
+
+    public function getDisplayNameMobileAttribute()
+    {
+        $last_initials = '';
+        if ($this->last_name) $last_initials = ucfirst($this->last_name);
+        if ($this->middle_name) $last_initials .= ' '. ucfirst($this->first_name)[0].'.';
+        if ($this->last_name) $last_initials .= ' '.ucfirst($this->middle_name)[0].'.';
+        return $last_initials;
     }
 
     public function getDisplaynameAttribute()

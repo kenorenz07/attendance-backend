@@ -79,16 +79,22 @@ class ClassDetailController extends Controller
     }
     public function getAttendances(ClassDetail $class_detail,Request $request) 
     {
-        // $class_students = $class_detail->students;
-        // $class_attendance = [];
+        $class_students = $class_detail->students;
+        $class_attendance = [];
 
-        // foreach($class_students as $class_student){
-        //     $
-        // }
+        foreach($class_students as $class_student){
+            $attendance = $class_student->attendances()->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')))->first();
 
-        return $class_detail->students()->whereHas("attendances", function ($query) use($request) {
-            return $query->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')));
-        });
+            if($attendance){
+                $class_student->put('attendance', $attendance);
+                $class_attendance[] = $class_student;
+            }
+        }
+
+        return $class_attendance;
+        // return $class_detail->students()->whereHas("attendances", function ($query) use($request) {
+        //     return $query->whereDate('date_of_attendance',Carbon::createFromFormat('d/m/Y', $request->query('date_filter')));
+        // });
 
     }
 }

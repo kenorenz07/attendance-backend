@@ -15,8 +15,6 @@ class Attendance extends Model
     const EXCUSED = 3;
     // const  = 4;
 
-    
-
     protected $fillable = ['remarks','time_in','time_out','date_of_attendance','class_detail_students_id'];
 
     public function class_detail_student(){

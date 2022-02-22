@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\ClassDetail;
 use App\Models\ClassDetailStudent;
+use App\Models\Student;
 use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;

@@ -12,4 +12,16 @@ class StudentController extends Controller
     {
         return Student::all();
     }
+
+    public function getAvailableStudents(Request $request)
+    {
+        $query = Student::query();
+
+        if($request->query('class_id')){
+            $query->whereDoesntHave('class_details', function ($query) use($request){
+                $query->where('class_detail_id', $request->query('class_id'));
+            });
+        }
+        return $query->get();
+    }
 }

@@ -101,7 +101,9 @@ class ClassDetailController extends Controller
 
     public function addStudentToClass(ClassDetail $class_detail,Request $request)
     {
-        return $class_detail->students()->create(['student_id' => $request->student_id]);
+        if(!$class_detail->students()->where('student_id',$request->student_id)->exists())
+        
+            return $class_detail->students()->create(['student_id' => $request->student_id]);
     }
 
     public function removeStudentFromClass(ClassDetailStudent $class_detail_student)

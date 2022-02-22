@@ -32,7 +32,9 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('class-detail/{class_detail}',[ClassDetailController::class,'show']);
     Route::get('class-detail/{class_detail}/get-attendances',[ClassDetailController::class,'getAttendances']);
     Route::get('class-detail/{class_detail}/get-days-filter',[ClassDetailController::class,'getDatesForFilter']);
-    
+    Route::post('class-detail/{class_detail}/add-student',[ClassDetailController::class,'addStudentToClass']);
+    Route::put('class-detial/update-attendance/{attendance}',[ClassDetailController::class,'updateStudentAttendance']);
+    Route::delete('class-detail/student/{class_detail_student}/remove-student',[ClassDetailController::class,'removeStudentFromClass']);
     // SUBJECT 
     Route::get('subjects',[SubjectController::class,'getAll']);
     // STUDENT

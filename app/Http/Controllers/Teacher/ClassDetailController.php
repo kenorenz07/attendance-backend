@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attendance;
 use App\Models\ClassDetail;
+use App\Models\ClassDetailStudent;
 use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -94,5 +96,24 @@ class ClassDetailController extends Controller
 
         return $class_attendance;
 
+    }
+
+    public function addStudentToClass(ClassDetail $class_detail,Request $request)
+    {
+        return $class_detail->students()->create(['student_id' => $request->student_id]);
+    }
+
+    public function removeStudentFromClass(ClassDetailStudent $class_detail_student)
+    {
+        $class_detail_student->attendances()->delete();
+
+        return $class_detail_student->delete();
+    }
+
+    public function updateStudentAttendance(Attendance $attendance,Request $request)
+    {
+        return $attendance->update([
+            'remarks' => $request->remark
+        ]);
     }
 }

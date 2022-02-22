@@ -92,9 +92,11 @@ class ClassDetailController extends Controller
     public function addClassStudents(ClassDetail $class_detail,Request $request)
     {
         foreach($request->student_ids as $id ) {
-            $class_detail->students()->create([
-                "student_id" => $id 
-            ]);
+            if(!$class_detail->students()->where('student_id',$id)->exists()){
+                $class_detail->students()->create([
+                    "student_id" => $id 
+                ]);
+            }
         }
         return 'Success';
     }

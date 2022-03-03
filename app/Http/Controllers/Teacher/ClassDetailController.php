@@ -11,6 +11,7 @@ use App\Models\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use PharIo\Manifest\RequiresElement;
 
 class ClassDetailController extends Controller
 {
@@ -81,6 +82,17 @@ class ClassDetailController extends Controller
 
         return $days;
     }
+
+    public function getStudentStatistics($class_student)
+    {
+        return [
+            "absent" => $class_student->attendances()->where('remarks',Attendance::ABSENT)->count(),
+            "present" => $class_student->attendances()->where('remarks',Attendance::PRESENT)->count(),
+            "late" => $class_student->attendances()->where('remarks',Attendance::LATE)->count(),
+            "excused" => $class_student->attendances()->where('remarks',Attendance::EXCUSED)->count(),
+        ];
+    }
+
     public function getAttendances(ClassDetail $class_detail,Request $request) 
     {
         $class_students = $class_detail->students()->with('student')->get();
@@ -90,7 +102,9 @@ class ClassDetailController extends Controller
             $attendance = $class_student->attendances()->whereDate('date_of_attendance',Carbon::createFromFormat('m/d/Y',$request->query('date_filter')))->first();
 
             if($attendance){
+                $statistics = $this->getStudentStatistics($class_student);
                 $class_student = Arr::add($class_student,'attendance', $attendance);
+                $class_student = Arr::add($class_student,'statistics', $statistics);
                 $class_attendance[] = $class_student;
             }
         }

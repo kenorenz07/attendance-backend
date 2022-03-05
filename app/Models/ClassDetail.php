@@ -46,4 +46,8 @@ class ClassDetail extends Model
     public function students(){
         return $this->hasMany(ClassDetailStudent::class);
     }
+
+    public function notifications(){
+        return $this->hasMany(Notification::class);
+    }
 }

@@ -43,6 +43,9 @@ export default {
         roomRule : [
             v => !!v || 'Room is required',
         ],
+        sectionRule : [
+            v => !!v || 'Section is required',
+        ],
         scheduleRule : [
             v => !!v || 'Schedule is required',
         ],

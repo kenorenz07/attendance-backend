@@ -17,7 +17,8 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('class_detail_id')->constrained('class_details');
-            $table->foreignId('student_id')->constrained('students');
+            $table->morphs('notifiable');
+            // $table->foreignId('student_id')->constrained('students');
             $table->timestamps();
         });
     }

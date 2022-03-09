@@ -9,13 +9,15 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['class_detail_id','student_id','name'];
+    protected $guarded = [];
 
     public function class_detail(){
         return $this->belongsTo(ClassDetail::class);
     }
 
-    public function student(){
-        return $this->belongsTo(Student::class);
+    public function notifiable()
+    {
+        return $this->morphTo();
     }
+
 }

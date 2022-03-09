@@ -10,6 +10,7 @@ import Teachers from '../pages/Admin/Teachers.vue';
 import Students from '../pages/Admin/Students.vue';
 import ClassDetails from '../pages/Admin/ClassDetails.vue';
 import Rooms from '../pages/Admin/Rooms.vue';
+import Sections from '../pages/Admin/Sections.vue';
 import Subjects from '../pages/Admin/Subjects.vue';
 import Schedules from '../pages/Admin/Schedules.vue';
 
@@ -18,6 +19,7 @@ import Teacher from '../pages/Admin/views/Teacher.vue';
 import ClassDetail from '../pages/Admin/views/ClassDetail.vue';
 import Student from '../pages/Admin/views/Student.vue';
 import Room from '../pages/Admin/views/Room.vue';
+import Section from '../pages/Admin/views/Section.vue';
 import Schedule from '../pages/Admin/views/Schedule.vue';
 import Subject from '../pages/Admin/views/Subject.vue';
 
@@ -108,6 +110,16 @@ const router = new VueRouter({
                     path: '/room/:id',
                     name: 'room',
                     component: Room,
+                },
+                {
+                    path: '/sections',
+                    name: 'sections',
+                    component: Sections,
+                },
+                {
+                    path: '/section/:id',
+                    name: 'section',
+                    component: Section,
                 },
             ]
         },

@@ -51,25 +51,33 @@ class NotificationsTask extends Command
 
             $now = Carbon::now();
 
+            $teacher_notifications = $class->teacher->notications()->whereDate('created_at',Carbon::now())->count();
+
+            if($now->diffInMinutes($start_time) < 0 && $teacher_notifications < 3){
+                $class->teacher->notifications()->create([
+                    "class_detail_id" => $class->id,
+                    "name" => "Starting in ".$now->diffInMinutes($start_time). " mins",
+                ]);
+            }
+
             foreach($class->students as $student) {
                 $attendance_exists = $student->attendances->whereDate("date_of_attendance",Carbon::now())->exists();
-                if(!$attendance_exists){
+                if(!$attendance_exists && $now->diffInMinutes($end_time) < 0){
 
                     if($now->diffInMinutes($start_time) < 0) {
-                        $class->notifications()->create([
+                        $student->notifications()->create([
+                            "class_detail_id" => $class->id,
                             "name" => "Starting in ".$now->diffInMinutes($start_time). " mins",
-                            "student_id" => $student->student_id
                         ]);
                     }
                     else if($now->diffInMinutes($start_time) > 0) {
-                        $class->notifications()->create([
+                        $student->notifications()->create([
+                            "class_detail_id" => $class->id,
                             "name" => $now->diffInMinutes($start_time)." mins late",
-                            "student_id" => $student->student_id
                         ]);
                     }
-
-
                 }
+
             }
         }
     }

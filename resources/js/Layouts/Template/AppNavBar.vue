@@ -54,6 +54,7 @@ export default {
             { title: 'Classes', icon: 'mdi-book-variant', route: '/class-details' },
             { title: 'Students', icon: 'mdi-account', route: '/students' },
             { title: 'Rooms', icon: 'mdi-door-open', route: '/rooms' },
+            { title: 'Sections', icon: 'mdi-vector-intersection', route: '/sections' },
             { title: 'Schedules', icon: 'mdi-timer-sand-full', route: '/schedules' },
             { title: 'Subjects', icon: 'mdi-book-open-page-variant', route: '/subjects' },
         ],

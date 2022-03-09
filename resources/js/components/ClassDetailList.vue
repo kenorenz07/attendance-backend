@@ -54,6 +54,12 @@
                 </span>
               </span>
             </div>
+            <div v-if="display_to != 'section'">
+              <p class="text-h6 mb-0">Section :</p>
+              <span class="text-subtitle-1 pl-3">
+                {{ class_detail.section.name }}
+              </span>
+            </div>
             <div v-if="display_to != 'room'">
               <p class="text-h6 mb-0">Room :</p>
               <span class="text-subtitle-1 pl-3"

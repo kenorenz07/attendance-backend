@@ -50,6 +50,9 @@
                 <template v-slot:item.subject_id="{ item }">
                     {{item.subject.name}}
                 </template>
+                <template v-slot:item.section_id="{ item }">
+                    {{item.section.name}}
+                </template>
                 <template v-slot:item.schedule_id="{ item }">
                     {{item.schedule.day}} {{
                         moment(item.schedule.time_start, "HH:mm:ss").format(
@@ -134,6 +137,7 @@
         headers: [
             // { text: "#", align:"start", value: "id" },
             { text: "Subject", value: "subject_id" },
+            { text: "Section", value: "section_id" },
             { text: "Room", value: "room_id" },
             { text: "Schedule", value: "schedule_id" },
             { text: "Teacher", value: "teacher_id" },
@@ -160,6 +164,7 @@
                 id:null,
                 subject : null,
                 schedule : null,
+                section : null,
                 room : null,
                 teacher : null
             }
@@ -192,6 +197,7 @@
                 subject : null,
                 schedule : null,
                 room : null,
+                section : null,
                 teacher : null,
                 start_end_date : [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
             }
@@ -204,6 +210,7 @@
                 subject : class_detail.subject,
                 schedule : class_detail.schedule,
                 room : class_detail.room,
+                section : class_detail.section,
                 teacher : class_detail.teacher,
                 start_end_date : [class_detail.start_date,class_detail.end_date],
             }
@@ -215,6 +222,7 @@
             let class_det = {
                 subject_id : this.class_detail.subject.id,
                 room_id : this.class_detail.room.id,
+                section_id : this.class_detail.section.id,
                 schedule_id : this.class_detail.schedule.id,
                 teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
                 start_date : this.class_detail.start_end_date[0],

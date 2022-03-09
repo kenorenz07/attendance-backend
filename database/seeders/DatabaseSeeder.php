@@ -8,6 +8,7 @@ use App\Models\ClassDetail;
 use App\Models\ClassDetailStudent;
 use App\Models\Room;
 use App\Models\Schedule;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\Subject;
 use App\Models\Teacher;
@@ -41,6 +42,8 @@ class DatabaseSeeder extends Seeder
 
         Subject::factory()->count(20)->create();
 
+        Section::factory()->count(20)->create();
+
         Teacher::factory()->count(20)->create();
 
         Student::factory()->count(100)->create();
@@ -50,18 +53,21 @@ class DatabaseSeeder extends Seeder
             $room_id = rand(1,20);
             $subject_id = rand(1,20);
             $schedule_id = rand(1,20);
+            $section_id = rand(1,20);
             $teacher_id = rand(1,20);
 
             if(!ClassDetail::where([
                 "room_id" => $room_id,
                 "subject_id" => $subject_id,
                 "schedule_id" => $schedule_id,
+                "section_id" => $section_id,
             ])->exists()) {
                 $class = ClassDetail::create([
                     "room_id" => $room_id,
                     "subject_id" => $subject_id,
                     "schedule_id" => $schedule_id,
                     "teacher_id" => $teacher_id,
+                    "section_id" => $section_id,
                     "start_date" => Carbon::now()->startOfYear(),
                     "end_date" => Carbon::now()->endOfYear()
                 ]);

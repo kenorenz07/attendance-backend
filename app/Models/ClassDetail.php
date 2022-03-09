@@ -14,12 +14,13 @@ class ClassDetail extends Model
         "room_id",
         "subject_id",
         "schedule_id",
+        "section_id",
         "teacher_id",
         "start_date",
         "end_date",
     ];
 
-    protected $with = ["room","subject","schedule","teacher","students"] ;
+    protected $with = ["room","subject","schedule","section","teacher","students"] ;
 
     protected $appends = ["student_count"];
 
@@ -37,6 +38,10 @@ class ClassDetail extends Model
 
     public function schedule(){
         return $this->belongsTo(Schedule::class);
+    }
+
+    public function section(){
+        return $this->belongsTo(Section::class);
     }
 
     public function teacher(){

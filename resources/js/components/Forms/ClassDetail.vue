@@ -67,6 +67,29 @@
                                     </template>
                                 </template>
                             </v-select>
+                             <v-select
+                                v-if="!is_assign"
+                                :items="sections"
+                                v-model="form.section"
+                                label="Select room*"
+                                item-text="name"
+                                item-value="name"
+                                max-height="auto"
+                                autocomplete
+                                return-object
+                                required
+                                :rules="sectionRule"
+                            >
+                                <template slot="item" slot-scope="data">
+                                    <template>
+                                    <v-list-item-content>
+                                        <v-list-item-title
+                                        v-html="data.item.name"
+                                        ></v-list-item-title>
+                                    </v-list-item-content>
+                                    </template>
+                                </template>
+                            </v-select>
                             <v-select
                                 v-if="!is_assign"
                                 :items="schedules"
@@ -247,6 +270,7 @@
                 id:null,
                 subject : null,
                 schedule : null,
+                section : null,
                 room : null,
                 teacher : null,
                 start_end_date : [(new Date()).toISOString().split('T')[0],(new Date(new Date().getTime()+(14*24*60*60*1000))).toISOString().split('T')[0]],
@@ -261,6 +285,7 @@
       teachers : [],
       subjects : [],
       rooms : [],
+      sections : [],
       schedules : [],
       availabe_classes : [],
       dateRangeText:''
@@ -274,7 +299,7 @@
         },
         'form.start_end_date' : {
             handler(val) {
-                if(val.length > 1){
+                if(val && val.length > 1){
                     this.dateRangeText = val.join(' ~ ')
                 }
             }
@@ -298,6 +323,10 @@
 
                 this.$admin.get("room/index").then(({ data }) => {
                     this.rooms = data;
+                });
+
+                 this.$admin.get("section/index").then(({ data }) => {
+                    this.sections = data;
                 });
 
                 this.$admin.get("schedule/index").then(({ data }) => {

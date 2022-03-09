@@ -37,6 +37,10 @@
                                     <div class="">Subject</div>
                                     <div class="text-subtitle-1 ml-2">{{class_detail.subject.name}} - {{ class_detail.subject.description }}</div>
                                 </div>
+                                <div v-if="class_detail.section" >
+                                    <div class="">Section</div>
+                                    <div class="text-subtitle-1 ml-2">{{class_detail.section.name}}</div>
+                                </div>
                                 <div v-if="class_detail.room" >
                                     <div class="">Room</div>
                                     <div class="text-subtitle-1 ml-2">{{class_detail.room.name}} ({{ class_detail.room.seats ? class_detail.room.seats : 0 }} seat/s)</div>
@@ -256,6 +260,7 @@ export default {
             let class_det = {
                 subject_id : this.class_detail.subject.id,
                 room_id : this.class_detail.room.id,
+                section_id : this.class_detail.section.id,
                 schedule_id : this.class_detail.schedule.id,
                 teacher_id : this.class_detail.teacher ? this.class_detail.teacher.id : null,
                 start_date : this.class_detail.start_end_date[0],

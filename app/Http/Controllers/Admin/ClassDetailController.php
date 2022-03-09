@@ -32,6 +32,9 @@ class ClassDetailController extends Controller
                 ->orWhereHas('subject', function ($query) use($request){
                     return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
                 })
+                ->orWhereHas('section', function ($query) use($request){
+                    return $query->where('name', 'LIKE', "%".$request->query('search_key')."%");
+                })
                 ->orWhereHas('teacher', function ($query) use($request){
                     return $query->where("last_name", 'LIKE', "%".$request->query('search_key')."%")
                         ->orWhere("first_name", 'LIKE', "%".$request->query('search_key')."%")
@@ -110,6 +113,7 @@ class ClassDetailController extends Controller
             "subject_id" => "required",
             "room_id" => "required",
             "schedule_id" => "required",
+            "section_id" => "required",
         ]);
 
         $check = ClassDetail::where([ 
@@ -117,6 +121,7 @@ class ClassDetailController extends Controller
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
             "teacher_id" => $request->teacher_id,
+            "section_id" => $request->section_id,
         ])->exists();
 
         if($check) return ["error" => "Class already"];
@@ -124,6 +129,7 @@ class ClassDetailController extends Controller
         $class_detail = ClassDetail::create([
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
+            "section_id" => $request->section_id,
             "schedule_id" => $request->schedule_id,
             "teacher_id" => $request->teacher_id ? $request->teacher_id : null,
             "start_date" => Carbon::parse($request->start_date),
@@ -139,25 +145,29 @@ class ClassDetailController extends Controller
             "subject_id" => "required",
             "room_id" => "required",
             "schedule_id" => "required",
+            "section_id" => "required",
         ]);
 
         $check = ClassDetail::where([ 
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
+            "section_id" => $request->section_id,
         ])->exists();
         
         
         if($check &&
             $request->subject_id != $class_detail->subject_id && 
                 $request->room_id != $class_detail->room_id && 
-                    $request->schedule_id != $class_detail->schedule_id) 
+                    $request->schedule_id != $class_detail->schedule_id &&
+                        $request->section_id != $class_detail->section_id) 
             return ["error" => "Class already exists"];
 
         $class_detail->update([
             "subject_id" => $request->subject_id,
             "room_id" => $request->room_id,
             "schedule_id" => $request->schedule_id,
+            "section_id" => $request->section_id,
             "teacher_id" => $request->teacher_id ? $request->teacher_id : null,
             "start_date" => Carbon::parse($request->start_date),
             "end_date" => Carbon::parse($request->end_date),

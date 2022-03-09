@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\SectionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -75,6 +76,15 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     Route::post('room/create',[RoomController::class,'create']);
     Route::put('room/update/{room}',[RoomController::class,'update']);
     Route::delete('room/delete/{room}/',[RoomController::class,'delete']);
+
+    // SECTIONS
+    Route::get('section/index',[SectionController::class,'index']);
+    Route::get('section/all',[SectionController::class,'getAll']);
+    Route::get('section/show/{section}',[SectionController::class,'show']);
+    Route::get('section/classes/{section}',[SectionController::class,'classess']);
+    Route::post('section/create',[SectionController::class,'create']);
+    Route::put('section/update/{section}',[SectionController::class,'update']);
+    Route::delete('section/delete/{section}/',[SectionController::class,'delete']);
 
     // SCHEDULES
     Route::get('schedule/index',[ScheduleController::class,'index']);

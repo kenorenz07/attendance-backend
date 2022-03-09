@@ -69,9 +69,10 @@ class Student extends Authenticatable
     public function class_details(){
         return $this->hasMany(ClassDetailStudent::class);
     }
-
+  
     public function notifications(){
-        return $this->hasMany(Notification::class);
+        return $this->morphMany(Notification::class, 'notifiable');
     }
+
     
 }

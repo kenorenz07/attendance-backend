@@ -83,6 +83,14 @@ export default {
         RoomForm,
         ClassDetailList
     },
+    watch : {
+        'pagination.page' : {
+            deep:true,
+            handler(val) {
+                this.initialize()
+            }
+        }
+    },
     mounted () {
         this.initialize()
     },

@@ -155,6 +155,7 @@
                                 </template>
                             </v-select>
                             <v-menu
+                                v-if="!is_assign"
                                 ref="menu"
                                 v-model="date_menu"
                                 :close-on-content-click="false"

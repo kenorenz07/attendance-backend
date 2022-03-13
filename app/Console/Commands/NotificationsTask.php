@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\ClassDetail;
+use App\Models\Notification;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -51,9 +52,9 @@ class NotificationsTask extends Command
 
             $now = Carbon::now();
 
-            $teacher_notifications = $class->teacher->notications()->whereDate('created_at',Carbon::now())->count();
+            $teacher_notifications = $class->teacher->notifications()->where('class_detail_id',$class->id)->whereDate('created_at',Carbon::now())->count();
 
-            if($now->diffInMinutes($start_time) < 0 && $teacher_notifications < 3){
+            if($now->diffInMinutes($start_time, false) > 0 && $now->diffInMinutes($start_time, false) < 20 && $teacher_notifications < 3){
                 $class->teacher->notifications()->create([
                     "class_detail_id" => $class->id,
                     "name" => "Starting in ".$now->diffInMinutes($start_time). " mins",
@@ -61,17 +62,17 @@ class NotificationsTask extends Command
             }
 
             foreach($class->students as $student) {
-                $attendance_exists = $student->attendances->whereDate("date_of_attendance",Carbon::now())->exists();
-                if(!$attendance_exists && $now->diffInMinutes($end_time) < 0){
+                $attendance_exists = $student->attendances()->whereDate("date_of_attendance",Carbon::now())->exists();
+                if(!$attendance_exists && $now->diffInMinutes($end_time,false) > 0){
 
-                    if($now->diffInMinutes($start_time) < 15) {
-                        $student->notifications()->create([
+                    if($now->diffInMinutes($start_time, false) < 20 && $now->diffInMinutes($start_time, false) > 0) {
+                        $student->student->notifications()->create([
                             "class_detail_id" => $class->id,
                             "name" => "Starting in ".$now->diffInMinutes($start_time). " mins",
                         ]);
                     }
-                    else if($now->diffInMinutes($start_time) > 0) {
-                        $student->notifications()->create([
+                    else if($now->diffInMinutes($start_time, false) < 0) {
+                        $student->student->notifications()->create([
                             "class_detail_id" => $class->id,
                             "name" => $now->diffInMinutes($start_time)." mins late",
                         ]);

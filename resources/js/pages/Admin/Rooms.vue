@@ -79,8 +79,8 @@
                         <v-icon>
                             mdi-delete
                         </v-icon>
-                    </v-btn>
-                </template> -->
+                    </v-btn>-->
+                </template> 
             </v-data-table>
         </v-card>
         <RoomForm :form="room" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveRoom()" />
@@ -209,6 +209,7 @@
     },  
         
     mounted() {
+        console.log('sgsg')
         this.initialize();
     },
   }

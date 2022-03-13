@@ -21,6 +21,12 @@ class ScheduleController extends Controller
         $sortBy = $request->query('sortBy');
         $sortDesc = $request->query('sortDesc');
 
+
+        if($request->query('search_key')){
+            $schedules
+                ->where("day",'LIKE', "%".$request->query('search_key')."%");
+        }
+
         if($sortBy){
             foreach($sortBy as $key => $sort){
                 if($sortDesc[$key] == "true"){
@@ -31,6 +37,8 @@ class ScheduleController extends Controller
                 }
             }
         }
+
+
 
         return $schedules->paginate($per_page);
 

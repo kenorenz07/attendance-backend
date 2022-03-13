@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Student\AuthenticationController;
+use App\Http\Controllers\Student\NotificationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:student-api','scopes:stu
     Route::get('/details',[AuthenticationController::class, 'details']);
 
     Route::post('/logout',[AuthenticationController::class, 'logout']);
+
+    Route::get('notifications/{student}', [NotificationController::class,'getAll']);
+
 });

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Teacher\AuthenticationController;
 use App\Http\Controllers\Teacher\ClassDetailController;
+use App\Http\Controllers\Teacher\NotificationController;
 use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\SubjectController;
 use Illuminate\Http\Request;
@@ -40,4 +41,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     // STUDENT
     Route::get('students',[StudentController::class,'getAll']);
     Route::get('students/get-available',[StudentController::class,'getAvailableStudents']);
+
+    Route::get('notifications/{teacher}', [NotificationController::class,'getAll']);
 });

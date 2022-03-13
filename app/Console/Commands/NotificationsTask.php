@@ -64,7 +64,7 @@ class NotificationsTask extends Command
                 $attendance_exists = $student->attendances->whereDate("date_of_attendance",Carbon::now())->exists();
                 if(!$attendance_exists && $now->diffInMinutes($end_time) < 0){
 
-                    if($now->diffInMinutes($start_time) < 0) {
+                    if($now->diffInMinutes($start_time) < 15) {
                         $student->notifications()->create([
                             "class_detail_id" => $class->id,
                             "name" => "Starting in ".$now->diffInMinutes($start_time). " mins",

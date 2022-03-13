@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenerateAttendanceController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::get('attendance/{classDetail}',[GenerateAttendanceController::class, 'generateAttendance']);
 Route::get('/{any}', function () {
     return view('admin');
 })->where('any', '.*');

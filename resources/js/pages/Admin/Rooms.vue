@@ -69,7 +69,7 @@
                             mdi-pencil
                         </v-icon>
                     </v-btn>
-                    <v-btn
+                    <!-- <v-btn
                         fab
                         dark
                         color="error"
@@ -80,7 +80,7 @@
                             mdi-delete
                         </v-icon>
                     </v-btn>
-                </template>
+                </template> -->
             </v-data-table>
         </v-card>
         <RoomForm :form="room" :dialogState="addition_edition_dailog" @close="addition_edition_dailog = false" @save="addition_edition_dailog = false,saveRoom()" />

@@ -99,6 +99,24 @@
                                         </template>
                                         <span>Add student</span>
                                     </v-tooltip>
+
+                                    <v-tooltip bottom color="info">
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-btn
+                                                class="mx-auto"
+                                                fab
+                                                dark
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                color="info"
+                                                large
+                                                @click="generateAttendancePdf(class_detail.id)"
+                                            >
+                                                <v-icon> mdi-arrow-collapse-down </v-icon>
+                                            </v-btn>
+                                        </template>
+                                        <span>Generate attendance summary</span>
+                                    </v-tooltip>
                                 </div>
                             </v-col>
                         </v-row>
@@ -275,6 +293,19 @@ export default {
                     this.successNotify("Updated class_detail")
                 }
                 this.initialize()
+            })
+        },
+        generateAttendancePdf(class_id){
+             this.$admin.get('generate-attendance-attendance/'+class_id,{
+                responseType: 'arraybuffer'
+            })
+            .then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Class#'+class_id+'_AttendanceSummary'+'.pdf');
+                document.body.appendChild(link);
+                link.click();
             })
         },
         addStudentsToClass(){

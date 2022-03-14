@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    public function getAll(Teacher $teacher)
+    public function getAll(Request $request)
     {
-        return $teacher->notifications()->with('class_detail','notifiable')->orderBy('created_at','DESC')->get();
+        return $request->user()->notifications()->with('class_detail','notifiable')->orderBy('created_at','DESC')->get();
     }
 }

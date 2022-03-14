@@ -81,9 +81,9 @@ class AuthenticationController extends Controller
         ]);
 
         if(!Hash::check($teacher->password ,$request->previous_password))
-            return "Password incorrect";
+            return ["error" => "Password incorrect"];
         else if($request->new_password == $request->confirm_password)
-            return "New password does not match";
+            return ["error" =>"New password does not match"];
         else {
             $teacher->update([
                 "password" => bcrypt($request->new_password)

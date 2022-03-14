@@ -27,6 +27,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('/details',[AuthenticationController::class, 'details']);
 
     Route::post('/logout',[AuthenticationController::class, 'logout']);
+    Route::post('/update',[AuthenticationController::class, 'update']);
+    Route::post('/reset-password',[AuthenticationController::class, 'resetPassword']);
 
     // CLASS DETAILS 
     Route::get('class-details',[ClassDetailController::class,'getAll']);

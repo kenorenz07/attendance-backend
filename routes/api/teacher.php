@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenerateAttendanceController;
 use App\Http\Controllers\Teacher\AuthenticationController;
 use App\Http\Controllers\Teacher\ClassDetailController;
 use App\Http\Controllers\Teacher\NotificationController;
@@ -45,4 +46,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('students/get-available',[StudentController::class,'getAvailableStudents']);
 
     Route::get('notifications', [NotificationController::class,'getAll']);
+    Route::get('generate-attendance-attendance/{classDetail}',[GenerateAttendanceController::class, 'generateAttendance']);
+
 });

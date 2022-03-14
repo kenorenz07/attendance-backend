@@ -25,6 +25,6 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:student-api','scopes:stu
 
     Route::post('/logout',[AuthenticationController::class, 'logout']);
 
-    Route::get('notifications/', [NotificationController::class,'getAll']);
+    Route::get('notifications', [NotificationController::class,'getAll']);
 
 });

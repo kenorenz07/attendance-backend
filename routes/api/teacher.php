@@ -42,5 +42,5 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('students',[StudentController::class,'getAll']);
     Route::get('students/get-available',[StudentController::class,'getAvailableStudents']);
 
-    Route::get('notifications/', [NotificationController::class,'getAll']);
+    Route::get('notifications', [NotificationController::class,'getAll']);
 });

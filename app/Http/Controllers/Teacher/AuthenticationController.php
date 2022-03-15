@@ -82,7 +82,7 @@ class AuthenticationController extends Controller
 
         if(!Hash::check($request->previous_password,$teacher->password ))
             return ["error" => "Password incorrect"];
-        else if($request->new_password == $request->confirm_password)
+        else if($request->new_password != $request->confirm_password)
             return ["error" =>"New password does not match"];
         else {
             $teacher->update([

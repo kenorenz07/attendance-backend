@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="mt-3">
                                         <div class="text-right text-subtitle-1">
-                                            Students sgsg
+                                            Students
                                         </div>
                                         <p class="text-right text-h4">
                                             {{statistics_totals.students}}

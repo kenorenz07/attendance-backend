@@ -59,6 +59,5 @@ class ClassDetailController extends Controller
         $attendances = $class_student->attendances()->orderBy('date_of_attendance','DESC')->get();
 
         return $attendances;
-
     }
 }

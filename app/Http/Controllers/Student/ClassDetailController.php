@@ -56,7 +56,7 @@ class ClassDetailController extends Controller
     {
         $class_student = $class_detail->students()->where('student_id',$request->user()->id)->first();
 
-        $attendances = $class_student->attendances()->orderBy('date','DESC')->get();
+        $attendances = $class_student->attendances()->orderBy('date_of_attendance','DESC')->get();
 
         return $attendances;
 

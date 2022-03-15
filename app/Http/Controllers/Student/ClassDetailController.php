@@ -13,9 +13,10 @@ class ClassDetailController extends Controller
 {
     public function getAll(Request $request)
     {
-        $teacher = $request->user();
 
-        $class_details = ClassDetail::query()->where('teacher_id', $teacher->id);
+        $class_details = ClassDetail::query()->whereHas('students',function($q) use($request) {
+            return $q->where('student_id',$request->user()->id);
+        });
 
         if($request->query('day')) { 
             $class_details->whereHas('schedule', function ($query) use($request){
@@ -53,7 +54,7 @@ class ClassDetailController extends Controller
 
     public function getAttendances(ClassDetail $class_detail,Request $request) 
     {
-        $class_student = $class_detail->students()->where('student_id',$request->user()->id)->get();
+        $class_student = $class_detail->students()->where('student_id',$request->user()->id)->first();
 
         $attendances = $class_student->attendances()->orderBy('date','DESC')->get();
 

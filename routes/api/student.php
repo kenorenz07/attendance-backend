@@ -38,5 +38,7 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:student-api','scopes:stu
     Route::get('subjects',[SubjectController::class,'getAll']);
 
     Route::get('notifications', [NotificationController::class,'getAll']);
+    Route::get('notifications-today', [NotificationController::class,'countToday']);
+    
 
 });

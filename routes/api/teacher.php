@@ -46,6 +46,8 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:teacher-api','scopes:tea
     Route::get('students/get-available',[StudentController::class,'getAvailableStudents']);
 
     Route::get('notifications', [NotificationController::class,'getAll']);
+    Route::get('notifications-today', [NotificationController::class,'countToday']);
+
     Route::get('generate-attendance-attendance/{classDetail}',[GenerateAttendanceController::class, 'generateAttendance']);
 
 });

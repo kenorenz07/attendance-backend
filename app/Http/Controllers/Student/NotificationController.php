@@ -16,6 +16,6 @@ class NotificationController extends Controller
 
     public function countToday(Request $request)
     {
-        return $request->user()->notifications()->where('created_at',Carbon::now())->count();
+        return $request->user()->notifications()->whereDate('created_at',Carbon::now())->count();
     }
 }

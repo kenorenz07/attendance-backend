@@ -73,4 +73,8 @@ class Teacher extends Authenticatable
     public function notifications(){
         return $this->morphMany(Notification::class, 'notifiable');
     }
+
+    public function logs(){
+        return $this->morphMany(Log::class, 'loggable');
+    }
 }

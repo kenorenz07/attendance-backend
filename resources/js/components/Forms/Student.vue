@@ -51,15 +51,15 @@
                               :rules="usernameRule"
                               v-model="form.username"
                             ></v-text-field>
-                            <v-text-field
-                              label="Password"
-                              required class="pt-1"
-                              :rules="form.id ? [] : usernameRule"
-                              v-model="form.password"
-                              :type="show_pass ? 'text' : 'password'"
-                              :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
-                              @click:append="show_pass = !show_pass"
-                            ></v-text-field>
+                          <v-text-field
+                            label="Password"
+                            required class="pt-1"
+                            :rules="form.id ? [] : usernameRule"
+                            v-model="form.password"
+                            :type="show_pass ? 'text' : 'password'"
+                            :append-icon="show_pass ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="show_pass = !show_pass"
+                          ></v-text-field>
                          
                         </v-col>
                         <v-col cols=6>

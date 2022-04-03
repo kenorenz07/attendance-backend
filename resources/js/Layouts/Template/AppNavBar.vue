@@ -49,7 +49,6 @@ export default {
         drawer: true,
         items: [
             { title: 'Dashboard', icon: 'mdi-view-dashboard', route: '/dashboard' },
-            { title: 'Admins', icon: 'mdi-account-supervisor', route: '/admins' },
             { title: 'Teachers', icon: 'mdi-account-multiple', route: '/teachers' },
             { title: 'Classes', icon: 'mdi-book-variant', route: '/class-details' },
             { title: 'Students', icon: 'mdi-account', route: '/students' },
@@ -57,6 +56,7 @@ export default {
             { title: 'Sections', icon: 'mdi-vector-intersection', route: '/sections' },
             { title: 'Schedules', icon: 'mdi-timer-sand-full', route: '/schedules' },
             { title: 'Subjects', icon: 'mdi-book-open-page-variant', route: '/subjects' },
+            { title: 'Logs', icon: 'mdi-note-multiple', route: '/Logs' },
         ],
     }),
     props : {
@@ -64,6 +64,13 @@ export default {
             require: true,
             type : Boolean
         }
+    },
+    created () {
+        this.$admin.get('details').then(({data}) => {
+            if(data.is_super) {
+                this.items.splice(1, 0, { title: 'Admins', icon: 'mdi-account-supervisor', route: '/admins' })
+            }
+        })
     },
     computed : {
         activeRoute () {

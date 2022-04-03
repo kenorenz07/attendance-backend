@@ -13,6 +13,7 @@ import Rooms from '../pages/Admin/Rooms.vue';
 import Sections from '../pages/Admin/Sections.vue';
 import Subjects from '../pages/Admin/Subjects.vue';
 import Schedules from '../pages/Admin/Schedules.vue';
+import Logs from '../pages/Admin/Logs.vue';
 
 // VIEWS 
 import Teacher from '../pages/Admin/views/Teacher.vue';
@@ -120,6 +121,11 @@ const router = new VueRouter({
                     path: '/section/:id',
                     name: 'section',
                     component: Section,
+                },
+                {
+                    path: '/logs',
+                    name: 'logs',
+                    component: Logs,
                 },
             ]
         },

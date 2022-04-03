@@ -22,6 +22,10 @@ class NodeMcuController extends Controller
             
             $class_detail_student = $class_detail->students;
 
+            $class_detail->teacher->logs()->create([
+                "message" => "Teacher ended class #".$class_detail->id.' subject '.$class_detail->subject->name
+            ]);
+
             foreach($class_detail_student as $student) {
                 if(!$student->attendances()->whereDate('created_at',Carbon::now())->exists()){
                     $student->attendances()->create([
@@ -117,6 +121,10 @@ class NodeMcuController extends Controller
                     "error" => "not found"
                 ];
             }
+
+            $class_detail->teacher->logs()->create([
+                "message" => "Teacher started class #".$class_detail->id.' subject '.$class_detail->subject->name
+            ]);
             
             return [
                 "authorized" => true,

@@ -60,7 +60,7 @@ class GenerateAttendanceController extends Controller
                 return "present";
                 break;
             case Attendance::LATE : 
-                return "aate";
+                return "late";
                 break;
             case Attendance::EXCUSED : 
                 return "excused";

@@ -37,7 +37,13 @@ export default {
         ],
     }),
     mounted() {
-        this.$vuetify.theme.dark = JSON.parse(localStorage.getItem('theme_dark'));
+        if(localStorage.getItem('theme_dark')) {
+            this.$vuetify.theme.dark = JSON.parse(localStorage.getItem('theme_dark'));
+        }
+        else {
+            localStorage.setItem('theme_dark', this.$vuetify.theme.dark)
+            this.$vuetify.theme.dark = JSON.parse(localStorage.getItem('theme_dark'));
+        }
     },
     methods : {
         darkMode() {

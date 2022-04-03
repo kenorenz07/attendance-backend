@@ -1,5 +1,5 @@
 <template>
-    <div class="m-2">
+    <div class="m-2" v-if="auth_admin.is_super">
         <v-card
             class="mx-auto px-5 py-5"
             outlined
@@ -116,6 +116,7 @@
         ],
         addition_edition_dailog: false,
         admin: {},
+        auth_admin : {},
         search_key : '',
       };
     },
@@ -136,6 +137,10 @@
             //     username: '',
             //     password: '',
             // }
+
+            this.$admin.get('details').then(({data}) => {
+                this.auth_admin = data
+            })
 
             this.loading = true;
 

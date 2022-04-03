@@ -33,4 +33,8 @@ class Admin extends Authenticatable
     {
         return $this->image()->first() ? '/storage/'.$this->image()->first()->name : null;
     }
+
+    public function logs(){
+        return $this->morphMany(Log::class, 'loggable');
+    }
 }

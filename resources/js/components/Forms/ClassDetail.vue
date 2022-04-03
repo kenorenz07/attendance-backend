@@ -71,7 +71,7 @@
                                 v-if="!is_assign"
                                 :items="sections"
                                 v-model="form.section"
-                                label="Select room*"
+                                label="Select section*"
                                 item-text="name"
                                 item-value="name"
                                 max-height="auto"

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthenticationController;
 use App\Http\Controllers\Admin\ClassDetailController;
 use App\Http\Controllers\Admin\ClassDetailStudentController;
+use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\StudentController;
@@ -110,6 +111,9 @@ Route::group( ['prefix' => '/v1','middleware' => ['auth:admin-api','scopes:admin
     
     //CLASS DETAIL STUDENT
     Route::get('/class-detail-student/{class_detail_student}/attendances',[ClassDetailStudentController::class,"getAttendance"]);
+   
+    // LOGS
+    Route::get('/logs',[LogController::class,"getAll"]);
 
     Route::get('generate-attendance-attendance/{classDetail}',[GenerateAttendanceController::class, 'generateAttendance']);
 

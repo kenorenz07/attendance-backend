@@ -74,5 +74,9 @@ class Student extends Authenticatable
         return $this->morphMany(Notification::class, 'notifiable');
     }
 
+    public function logs(){
+        return $this->morphMany(Log::class, 'loggable');
+    }
+
     
 }

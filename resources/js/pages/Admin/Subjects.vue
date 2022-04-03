@@ -69,7 +69,7 @@
                             mdi-pencil
                         </v-icon>
                     </v-btn>
-                    <v-btn
+                    <!-- <v-btn
                         fab
                         dark
                         color="error"
@@ -79,7 +79,7 @@
                         <v-icon>
                             mdi-delete
                         </v-icon>
-                    </v-btn>
+                    </v-btn> -->
                 </template>
             </v-data-table>
         </v-card>

@@ -26,6 +26,10 @@ class AuthenticationController extends Controller
             $success =  $teacher;
             $success['token'] =  $teacher->createToken('MyApp',['teacher'])->accessToken; 
 
+            $teacher->logs()->create([
+                "message" => "Teacher logged in to the mobile application"
+            ]);
+
             return response()->json($success, 200);
         }else{ 
             return response()->json(['error' => ['Username and Password are Wrong.']], 200);
@@ -67,6 +71,10 @@ class AuthenticationController extends Controller
 
         }
 
+        $request->user()->logs()->create([
+            "message" => "Teacher updated credentials"
+        ]);
+
         return $teacher;
     }
 
@@ -80,6 +88,7 @@ class AuthenticationController extends Controller
             "confirm_password" => "required",
         ]);
 
+        
         if(!Hash::check($request->previous_password,$teacher->password ))
             return ["error" => "Password incorrect"];
         else if($request->new_password != $request->confirm_password)
@@ -87,6 +96,10 @@ class AuthenticationController extends Controller
         else {
             $teacher->update([
                 "password" => bcrypt($request->new_password)
+            ]);
+
+            $request->user()->logs()->create([
+                "message" => "Teacher password updated"
             ]);
 
             return "Reset password succesfull";
@@ -97,6 +110,10 @@ class AuthenticationController extends Controller
     public function logout(Request $request)
     {
         auth()->guard('teacher')->logout();
+
+        $request->user()->logs()->create([
+            "message" => "Teacher logged out from the mobile application"
+        ]);
 
         $request->user()->token()->revoke();
 

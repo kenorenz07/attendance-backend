@@ -30,6 +30,10 @@ class AuthenticationController extends Controller
             $success =  $admin;
             $success['token'] =  $admin->createToken('MyApp',['admin'])->accessToken; 
 
+            $admin->logs()->create([
+                "message" => "Admin logged in the backoffice"
+            ]);
+
             return response()->json($success, 200);
         }else{ 
             return response()->json(['error' => ['Username and Password are Wrong.']], 200);
@@ -39,6 +43,10 @@ class AuthenticationController extends Controller
     public function logout(Request $request)
     {
         auth()->guard('admin')->logout();
+
+        $request->user()->logs()->create([
+            "message" => "Admin logged out the backoffice"
+        ]);
 
         $request->user()->token()->revoke();
 

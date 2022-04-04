@@ -11,6 +11,8 @@ class Log extends Model
 
     protected $guarded = [];
 
+    protected $with = ["loggable"];
+
     public function loggable()
     {
         return $this->morphTo();

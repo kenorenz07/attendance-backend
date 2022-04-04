@@ -33,6 +33,6 @@ class LogController extends Controller
             }
         }
 
-        return $logs->paginate($per_page);
+        return $logs->orderBy('created_at','DESC')->paginate($per_page);
     }
 }

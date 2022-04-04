@@ -32,6 +32,9 @@
                 :loading="loading"
                 class="elevation-4"
             >
+                <template v-slot:item.created_at="{ item }">
+                    {{moment(item.created_at).format("MMMM Do, YYYY hh:mm a")}}
+                </template>
             </v-data-table>
         </v-card>
 
@@ -57,6 +60,7 @@
         },
         headers: [
             { text: "Log", value: "message" },
+            { text: "Time stamp", value: "created_at" },
         ],
         search_key : '',
       };

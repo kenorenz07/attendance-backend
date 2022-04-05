@@ -36,25 +36,25 @@ class DatabaseSeeder extends Seeder
 
         $this->call(AdminSeeder::class);
 
-        Room::factory()->count(20)->create();
+        Room::factory()->count(10)->create();
 
-        Schedule::factory()->count(20)->create();
+        Schedule::factory()->count(10)->create();
 
-        Subject::factory()->count(20)->create();
+        Subject::factory()->count(10)->create();
 
-        Section::factory()->count(20)->create();
+        Section::factory()->count(10)->create();
 
-        Teacher::factory()->count(20)->create();
+        Teacher::factory()->count(10)->create();
 
-        Student::factory()->count(100)->create();
+        Student::factory()->count(10)->create();
 
-        for($int = 1; $int < 100; $int++){
+        for($int = 1; $int < 12; $int++){
 
-            $room_id = rand(1,20);
-            $subject_id = rand(1,20);
-            $schedule_id = rand(1,20);
-            $section_id = rand(1,20);
-            $teacher_id = rand(1,20);
+            $room_id = rand(1,10);
+            $subject_id = rand(1,10);
+            $schedule_id = rand(1,10);
+            $section_id = rand(1,10);
+            $teacher_id = rand(1,10);
 
             if(!ClassDetail::where([
                 "room_id" => $room_id,
@@ -80,7 +80,7 @@ class DatabaseSeeder extends Seeder
             
             for($i = 1; $i < 5; $i++){
                 $class_detail->students()->create([
-                    'student_id'=>rand(1,20)
+                    'student_id'=>rand(1,10)
                 ]);
             }
         

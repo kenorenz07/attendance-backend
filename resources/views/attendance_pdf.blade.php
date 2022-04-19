@@ -50,6 +50,10 @@
             position: absolute;
             right: 0;
         }
+        .nothingness {
+            border: 1px solid #dee2e6;
+            padding-left: 4px;
+        }
     </style>    
 </head>
 
@@ -63,6 +67,10 @@
             <p class="mb-0">Section : {{$class_detail->section->name}}</p>
             <p class="mb-0">Instructor : {{$class_detail->teacher->full_name}}</p>
             <p class="mb-0">Schedule : {{$class_detail->schedule->day}}, {{Carbon\Carbon::parse($class_detail->schedule->time_start)->format('g:i A')}} - {{Carbon\Carbon::parse($class_detail->schedule->time_end)->format('g:i A')}}</p>
+            <p class="mb-0">Date printed : {{Carbon\Carbon::now()->format('m/d/Y')}}</p>
+            @if ($user)
+                <p class="mb-0">Printed by : {{$user}}</p>
+            @endif
         </div>
         <div class="legends">
             <p class="mb-0"><strong> Legends </strong></p>
@@ -86,7 +94,7 @@
           </div>
     </div>
 
-    <table class="table table-bordered mt-5" style="table-layout:fixed;">
+    <table class="table table-bordered mt-5 mb-0" style="table-layout:fixed;">
         <thead>
           <tr>
             <td style="width: 5%" class="text-center">Student Name</td>
@@ -105,7 +113,8 @@
                 </tr>
             @endforeach
         </tbody>
-      </table>
+    </table>
+    <div class="nothingness">Nothing to follows</div>
 
       
 </body>

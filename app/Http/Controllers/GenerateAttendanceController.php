@@ -12,10 +12,17 @@ class GenerateAttendanceController extends Controller
 {
     public function generateAttendance(ClassDetail $classDetail)
     {
+        $user = null;
+
+        if(auth()->user()) {
+            $user = auth()->user()->name ?? auth()->user()->full_name;
+        }
+
         $data = [
             "class_detail" => $classDetail,
             "days" => $this->getDatesForFilter($classDetail),
-            "attendances" => $this->getClassAttendance($classDetail)
+            "attendances" => $this->getClassAttendance($classDetail),
+            "user" => $user,
         ];
         
         // return $data;
